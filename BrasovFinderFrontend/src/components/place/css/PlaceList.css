@@ -1,0 +1,54 @@
+.searchbar-content {
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 10000000;
+    top: 0;
+    padding-top: 2px;
+    transform: translateY(-14px);
+}
+
+.inner-scroll1 {
+    padding-top: 0px !important;
+}
+
+.place-list1{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    gap: 4%;
+    padding: 0px 8px;
+    background-color: transparent;
+}
+
+.card-item1 {
+    width: 48%;
+    margin-inline: 0px;
+    box-shadow: 5px 5px purple;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /*box-shadow: 10px 10px lightblue;*/
+}
+
+.buttons-card {
+    align-self: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.buttons-card ion-button {
+    width: 30%;
+    gap: 2%;
+}
+
+.visited-card {
+    background-color: #8BC34A;
+}
+
+.unvisited-card {
+    background-color: #FF5722;
+}
+
+
+
+

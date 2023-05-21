@@ -1,0 +1,88 @@
+.background-menu {
+    background-color: #9933ff;
+}
+
+.ion-item11{
+    padding: 20px;
+    border-radius: 5px;
+    transition:  0.5s ease;
+}
+
+.ion-item11:hover{
+    background-color: red;
+}
+
+.ion-item11:hover .icon-style{
+    background-color: red;
+}
+.ion-item11:hover .text-style{
+    background-color: red;
+}
+.list-element-div{
+    padding: 20px;
+    border-radius: 5px;
+    transition:  0.5s ease;
+
+}
+
+.list-element-div:hover{
+    background-color: #c2c2c2;
+}
+
+.icon-style{
+    height:30px;
+    width:30px;
+    color: #1ce00e;
+}
+.list-element-div .icon-style{
+    margin-left: 8%;
+    height:35px;
+}
+
+.text-style{
+    color: #001a00;
+}
+
+.list-element-div .text-style {
+    margin-left: 12%;
+    margin-top:15px;
+    position: relative;
+    top: -10px;
+}
+
+.list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+
+.help-last-element {
+    margin-top: auto;
+}
+
+.help-div {
+    padding: 20px;
+    border-radius: 5px;
+    transition: 0.5s ease;
+    position: absolute;
+    top:90%;
+}
+
+.help-div:hover{
+    background-color: #c2c2c2;
+}
+
+.help-div .icon-style {
+    margin-left: 8%;
+    height:35px;
+}
+
+.help-div .text-style {
+    margin-left: 12%;
+    margin-top:15px;
+    position: relative;
+    top: -10px;
+}
+

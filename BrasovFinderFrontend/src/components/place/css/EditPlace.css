@@ -1,0 +1,15 @@
+.buttons-edit {
+    display: flex;
+    gap : 40%;
+    align-items: center;
+    width: 100%;
+}
+
+.button-edit {
+    width: 30%;
+}
+
+
+.input-edit {
+    background-color: green;
+}
