@@ -27,6 +27,11 @@ export const findVisitByUserIdAndPlaceId: (token:string,place_id:number,user_id:
         return withLogs(axios.get(`${placeUrl}/visits/${place_id}/${user_id}`,authConfig(token)),'findVisitByPlaceIdAndUserId');
     }
 
+export const findFeedbackByUserIdAndPlaceId: (token:string,place_id:number,user_id:number) => Promise<FeedbackProps> =
+    (token,place_id,user_id) => {
+        return withLogs(axios.get(`${placeUrl}/feedbacks/${place_id}/${user_id}`,authConfig(token)),'findFeedbackByPlaceIdAndUserId');
+    }
+
 export const deletePlace : (token: string, place_id: number) => Promise<PlaceProps[]> = (token,place_id) =>{
     return withLogs(axios.delete(`${placeUrl}/${place_id}`, authConfig(token)), 'deletePlace')
 }
