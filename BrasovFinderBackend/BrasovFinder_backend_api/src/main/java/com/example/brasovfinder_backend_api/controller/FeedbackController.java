@@ -83,4 +83,16 @@ public class FeedbackController {
         return feedbackService.deleteFeedback(feedbackId);
     }
 
+    @GetMapping("feedbacks/{placeId}/{userId}")
+    @CrossOrigin
+    public Feedback findFeedbackByPlaceIdAndUserId(@PathVariable("placeId") Long place_id, @PathVariable("userId") Integer user_id) throws NotFoundException {
+        if (!placeRepository.existsById(place_id)){
+            throw new NotFoundException("Place not found!");
+        }
+        if (!userRepository.existsById(user_id)){
+            throw new NotFoundException("User not found!");
+        }
+        return feedbackService.findFeedbackByPlaceIdAndUserId(place_id,user_id);
+    }
+
 }
