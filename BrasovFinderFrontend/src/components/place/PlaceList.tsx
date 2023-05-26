@@ -62,7 +62,6 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
             const foundPhotos:{[key: number]:any} = {};
             for (const place1 of placesData) {
                 if (typeof place1.place_id !== "undefined") {
-
                     foundPhotos[place1.place_id] = await getOnePhoto(place1.place_id);
                 }
             }

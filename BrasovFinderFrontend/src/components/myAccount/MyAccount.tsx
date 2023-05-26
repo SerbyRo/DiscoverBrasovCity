@@ -2,33 +2,14 @@ import React, {useContext, useEffect, useState} from "react";
 import {RouteComponentProps, useHistory} from "react-router";
 import {AuthContext} from "../auth";
 import {FeedbackProps} from "../place/FeedbackProps";
-import {
-    IonAvatar,
-    IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle,
-    IonChip,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonPage,
-    IonRouterLink, IonTextarea, IonText, IonIcon, IonButton
-} from "@ionic/react";
+import {IonAvatar, IonChip, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRouterLink} from "@ionic/react";
 import {UserProps} from "../place/UserProps";
 import {findUserByToken} from "../auth/authApi";
 import {Menu} from "../menu/Menu";
 import {PlaceProps} from "../place/PlaceProps";
-import {
-    deleteFeedback,
-    deleteVisit,
-    findAllPlacesByUserId,
-    findVisitByUserIdAndPlaceId,
-    getAllFeedbacksByUser,
-    getPlaces
-} from "../place/PlaceApi";
+import {findAllPlacesByUserId, findVisitByUserIdAndPlaceId, getPlaces} from "../place/PlaceApi";
 import place from "../place/Place";
 import {VisitProps} from "../place/VisitProps";
-import {trash} from "ionicons/icons";
-import {alertController} from "@ionic/core";
 
 const MyAccount : React.FC<RouteComponentProps> = () => {
     const {token} = useContext(AuthContext);
@@ -49,56 +30,15 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
             setVisits(visitsData);
 
         };
-        const fetchFeedbacksByUserId = async (user_id: number) => {
-            const feedbacksData = await getAllFeedbacksByUser(token,user_id);
-            setFeedbacks(feedbacksData);
-        }
         const fetchUsernameByUser = async () => {
             const user1 = await findUserByToken(token);
             setUser(user1);
             setUserId(user1.id);
             console.log("Id-ul userului logat este "+ user1.id);
             fetchPlacesByUserId(user1.id??0);
-            fetchFeedbacksByUserId(user1.id??0);
         }
         fetchUsernameByUser();
     },[]);
-
-    const handleDeleteFeedback = async(feedback_id: number | undefined) => {
-        const alert = await alertController.create({
-            header: 'Confirm cancel your feedback',
-            message: 'Did you change your mind?',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        console.log('Delete canceled');
-                    }
-                }, {
-                    text: 'OK',
-                    handler: () => {
-                        if (typeof feedback_id === "undefined"){
-                            return;
-                        }
-                        try{
-
-                            deleteFeedback(token,feedback_id);
-                            const newFeedbacks = feedbacks.filter(feedback => feedback.feedback_id !== feedback_id);
-                            setFeedbacks(newFeedbacks);
-                        }catch (error)
-                        {
-                            console.log('Delete place error',error);
-                        }
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-
-    }
 
 
 
@@ -156,32 +96,6 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
 
                     ))}
                 </IonList>
-                <IonCard className="apps-card">
-                    <IonCardHeader>
-                        <IonCardSubtitle>
-                            Your feedbacks
-                        </IonCardSubtitle>
-                        <IonCardTitle>
-                            Preview of the given feedbacks
-                        </IonCardTitle>
-                    </IonCardHeader>
-                        <IonList>
-                            {feedbacks.map(feedback => (
-                                <IonItem>
-                                    <IonLabel>
-                                        <h3>{feedback.place_name}</h3>
-                                        <IonTextarea>
-                                            {feedback.feedback_text}
-                                        </IonTextarea>
-                                    </IonLabel>
-                                    <IonButton color="danger" onClick={()=>handleDeleteFeedback(feedback.feedback_id)}>
-                                        <IonIcon icon={trash} slot="icon-only"></IonIcon>
-                                    </IonButton>
-                                </IonItem>
-                            ))}
-                        </IonList>
-
-                </IonCard>
             </>
         );
     }

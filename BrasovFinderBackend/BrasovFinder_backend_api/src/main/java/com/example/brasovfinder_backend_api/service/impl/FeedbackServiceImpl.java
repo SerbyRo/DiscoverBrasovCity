@@ -65,14 +65,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback findFeedbackByPlaceIdAndUserId(Long place_id, Integer user_id) {
-        Optional<User> user = userRepository.findById(user_id);
-        Optional<Place> place = placeRepository.findById(place_id);
-        return feedbackRepository.findFeedbackByPlaceFeedbackAndUserFeedback(place.get(),user.get());
-    }
-
-
-    @Override
     public List<Feedback> findFeedbackByPlaceId(Long id) throws NotFoundException {
 
         if (!placeRepository.existsById(id)){
@@ -86,8 +78,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
         return feedbackList;
     }
-
-
 
     @Override
     public List<Feedback> findFeedbackByUserId(Integer id) throws NotFoundException {

@@ -4,14 +4,10 @@ import {AuthContext} from "../auth";
 import {UserProps} from "../place/UserProps";
 import {FeedbackProps} from "../place/FeedbackProps";
 import {findUserByToken} from "../auth/authApi";
-import {IonButton, IonDatetime, IonIcon, IonInput, IonItem, IonLabel, IonListHeader} from "@ionic/react";
+import {IonButton, IonLabel, IonListHeader} from "@ionic/react";
 import {Menu} from "../menu/Menu";
 import {mapsApiKey} from "../map/key/mapsApiKey";
 import {Autocomplete, DirectionsRenderer, GoogleMap, LoadScript} from "@react-google-maps/api";
-import {dateToString} from "../../utils/Utils";
-import {add, trash} from "ionicons/icons";
-import {addFeedback, addVisit, createPlace} from "../place/PlaceApi";
-import {alertController} from "@ionic/core";
 
 
 export const Location: React.FC<RouteComponentProps> = () => {
@@ -25,24 +21,9 @@ export const Location: React.FC<RouteComponentProps> = () => {
     const [source,setSource] = useState('');
     const [destination1,setDestination1] = useState('');
     const [recall,setRecall] = useState(0);
-    const [namePlace,setNamePlace] = useState<string>('');
-    const [pricePlace,setPricePlace] = useState<number>(0);
-    const [bookedDatePlace,setBookedDatePlace] = useState<Date>(new Date());
-    const [pointsPlace,setPointsPlace] = useState<number>(0);
-    const [latitudeGeocoder,setLatitudeGeocoder] = useState<number|undefined>(undefined);
-    const [longitudeGeocoder,setLongitudeGeocoder] = useState<number|undefined>(undefined);
-    const IonDateTimeDateFormat = "YYYY-MM-DD HH:mm";
     /** @type React.MutableRefObject<HTMLInputElement> */
     const sourceRef = useRef<HTMLInputElement>(null);
     const destinationRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        console.log('Latitude Geocoder:', latitudeGeocoder);
-    }, [latitudeGeocoder]);
-
-    useEffect(() => {
-        console.log('Longitude Geocoder:', longitudeGeocoder);
-    }, [longitudeGeocoder]);
 
     useEffect(() => {
         if (isLoaded && calculateSource && calculateDestination){
@@ -121,9 +102,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                     const results = await Promise.all([directionPromise1,directionPromise2,directionPromise3]);
                     const directionsResults = results as google.maps.DirectionsResult[];
                     setDirections(directionsResults);
-                    // if (results){
-                    //     setLatitudeGeocoder(directionsResults[0].geometry.location.lat());
-                    // }
                         // @ts-ignore
                     console.log("Aici e mapsu" + results[0].routes[0].legs[0].duration.text);
                     // @ts-ignore
@@ -173,21 +151,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             if (results) {
                                 console.log("Coordonate destinație:", results[0].geometry.location);
                             }
-                            if (results) {
-                                const latitudeGeocoder1 = results[0].geometry.location.lat();
-                                setLatitudeGeocoder(latitudeGeocoder1);
-                                console.log('Latitude Geocoder:', results[0].geometry.location.lat());
-
-                                const longitudeGeocoder1 = results[0].geometry.location.lng();
-                                setLongitudeGeocoder(longitudeGeocoder1);
-                                console.log('Longitude Geocoder:', results[0].geometry.location.lng());
-
-                                setCenter({lat: latitudeGeocoder1, lng: longitudeGeocoder1});
-                            }
-
-                            // Folosește latitudinea și longitudinea cum ai nevoie
-
-
                         } else {
                             // Adresa destinație nu este validă sau nu poate fi găsită
                             console.error("Eroare la adresa destinație:", status);
@@ -214,7 +177,7 @@ export const Location: React.FC<RouteComponentProps> = () => {
         width: '100%',
         height:'100vh',
     };
-    const [center, setCenter] = useState({ lat: 45.657, lng: 25.601});
+    const center = { lat: 48.8584, lng: 2.2945}
 
     const colors = ['blue', 'red', 'purple']; // Culori diferite pentru fiecare direcție
     const directionsOptions = directions?.map((direction, index) => ({
@@ -227,63 +190,18 @@ export const Location: React.FC<RouteComponentProps> = () => {
 
     const handleDestinationChanged = (event:any) => {
         setDestination1(event.target.value);
-        const value = event.target.value;
-        const destinationText = value.split(',')[0].trim();
-        console.log('Source Text:', destinationText);
-        setNamePlace(destinationText);
     };
 
     const handleSourceChanged = (event:any) => {
         setSource(event.target.value);
-
     };
 
 
-    function stringToDate(string: string | undefined | null): Date {
-        return new Date(string || new Date());
-    }
 
-    const addPlace = async () => {
-        const addedPlace = {
-            name: namePlace,
-            booked_date:bookedDatePlace,
-            price: pricePlace,
-            latitude: latitudeGeocoder??0,
-            longitude: longitudeGeocoder??0,
-            points: pointsPlace
-        };
-
-        const alert = await alertController.create({
-            header: 'Confirm add',
-            message: 'Do you want to add the place?',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        console.log('Add canceled');
-                    }
-                }, {
-                    text: 'OK',
-                    handler: () => {
-                        try{
-                            console.log("Acesta este place-ul adaugat " + addedPlace);
-                            createPlace(token,addedPlace);
-                            history.push("/home");
-                            //history.goBack();
-                        }catch (error){
-                            console.log('Update place error',error);
-                        }
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-    };
 
     function getContent() {
+
+
         return(
             <>
                 <LoadScript libraries={["places"]} googleMapsApiKey={mapsApiKey} >
@@ -292,7 +210,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             type='text'
                             placeholder='Your location'
                             ref = {sourceRef}
-                            //value={source}
                             className="clientFormDiv"
                             onBlur={(event)=>{
                                 setCalculateSource(true);
@@ -307,7 +224,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             type='text'
                             placeholder='Place location'
                             ref = {destinationRef}
-                            //value={destination1}
                             className="clientFormDiv"
                             onBlur={(event)=>{
                                 setCalculateDestination(true);
@@ -317,31 +233,11 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             required
                         />
                     </Autocomplete>
-                    <GoogleMap onLoad={() => setIsLoaded(true)} mapContainerStyle={containerStyle} center={center} zoom={8}>
+                    <GoogleMap onLoad={() => setIsLoaded(true)} mapContainerStyle={containerStyle} center={center} zoom={4}>
                         {directionsOptions?.map(({ directions, options }) => (
                             <DirectionsRenderer directions={directions} options={options} />
                         ))}
                     </GoogleMap>
-                    <IonItem>
-                        <IonLabel>The price  per ticket is </IonLabel>
-                        <IonInput className="input_edit" type="number" value={pricePlace}
-                                  onIonChange={e => setPricePlace(e.detail.value ? +e.detail.value : 0.0)}/>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel position="fixed">Date when you'll be visiting: </IonLabel>
-                        <IonDatetime className="input_edit" displayFormat={IonDateTimeDateFormat} value={dateToString(bookedDatePlace)}
-                                     onIonChange={e => setBookedDatePlace(stringToDate(e.detail.value))}/>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>The number of stars</IonLabel>
-                        <IonInput className="input_edit" type="number" value={pointsPlace}
-                                  onIonChange={e => setPointsPlace(e.detail.value ? +e.detail.value : 0.0)}/>
-                    </IonItem>
-                    <div>
-                        <IonButton color="primary" onClick={()=> addPlace()}>
-                            <IonIcon icon={add} slot="icon-only"></IonIcon>
-                        </IonButton>
-                    </div>
                 </LoadScript>
             </>
         );

@@ -20,8 +20,6 @@ public interface FeedbackService {
 
     List<Feedback> findFeedbackByPlaceId(Long id) throws NotFoundException;
 
-    Feedback findFeedbackByPlaceIdAndUserId(Long place_id, Integer user_id);
-
 
     List<Feedback> findFeedbackByUserId(Integer id) throws NotFoundException;
 

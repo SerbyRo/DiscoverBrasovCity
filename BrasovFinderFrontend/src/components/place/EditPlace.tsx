@@ -15,17 +15,7 @@ import {
     IonContent,
     IonItem,
     IonLabel,
-    IonInput,
-    IonDatetime,
-    IonCheckbox,
-    IonLoading,
-    IonFab,
-    IonFabButton,
-    IonIcon,
-    IonActionSheet,
-    IonList,
-    IonCard,
-    IonCardTitle, IonTextarea, IonCardSubtitle
+    IonInput, IonDatetime, IonCheckbox, IonLoading, IonFab, IonFabButton, IonIcon, IonActionSheet
 } from "@ionic/react";
 import NetworkStatus from "../network/NetworkStatus";
 import {MyMap} from "../map/MyMap";
@@ -34,12 +24,11 @@ import {camera, location, trash} from "ionicons/icons";
 import {dateToString} from "../../utils/Utils";
 import {Geolocation} from "@capacitor/geolocation";
 import {
-    addFeedback,
     addVisit,
     deletePlace,
     deleteVisit,
     findPlaceById,
-    findVisitByUserIdAndPlaceId, getAllFeedbacksByPlace, getAllFeedbacksByUser,
+    findVisitByUserIdAndPlaceId,
     getPlaces,
     updatePlace
 } from "./PlaceApi";
@@ -50,7 +39,6 @@ import {alertController} from "@ionic/core";
 import {ImageProps} from "./ImageProps";
 import {findUserByToken} from "../auth/authApi";
 import {UserProps} from "./UserProps";
-import {FeedbackProps} from "./FeedbackProps";
 interface EditPlaceProps extends RouteComponentProps<{
     id?: string;
 }>{
@@ -65,7 +53,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const {token} = useContext(AuthContext);
     const [name, setName] = useState<string>('');
     const [price, setPrice] = useState<number>(0);
-    const [bookedDate, setBookedDate] = useState<Date>(new Date());
+    const [boookedDate, setBookedDate] = useState<Date>(new Date());
     const [place, setPlace] = useState<PlaceProps>();
     const [points,setPoints] = useState<number>(0);
     const [placeState, setPlaceState] = useState<boolean>(false);
@@ -77,9 +65,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const [user,setUser] = useState<UserProps>();
     const [userId,setUserId] = useState<number>();
     const [isVisited,setIsVisited] = useState<boolean>(false);
-    const [feedbacks, setFeedbacks] = useState<FeedbackProps[]>([]);
-    const [stars,setStars] = useState<number>(0);
-    const [feedbackText,setFeedbackText] = useState<string>('');
     useEffect(()=>{
         const fetchPlaceById = async () =>{
             const routeId = match.params.id || '';
@@ -109,13 +94,11 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
             place_id: placeData.place_id,
             name:name,
             price: price,
-            booked_date: bookedDate,
+            booked_date: boookedDate,
             latitude:latitude??0,
             longitude:longitude??0,
             points:points
         };
-
-
 
         const alert = await alertController.create({
             header: 'Confirm update',
@@ -133,7 +116,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     handler: () => {
                         try{
                             updatePlace(token,updatedPlace);
-                            console.log("Locul modificat este: " + updatedPlace);
                             history.goBack();
                         }catch (error){
                             console.log('Update place error',error);
@@ -145,54 +127,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
 
         await alert.present();
     }
-
-    const handleAddFeedback = async () =>{
-        const routeId = match.params.id || '';
-        let routeIdNumber = +routeId;
-        const placeData = await findPlaceById(token,routeIdNumber);
-        const addedFeedback = {
-            place_id: placeData.place_id,
-            user_id: userId,
-            stars: stars,
-            feedback_text: feedbackText,
-            username: user?.username
-        };
-
-
-
-        const alert = await alertController.create({
-            header: 'Confirm update',
-            message: 'Do you want to post the feedback?',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        console.log('Update canceled');
-                    }
-                }, {
-                    text: 'OK',
-                    handler: () => {
-                        try{
-                            console.log("Acesta este feedback-ul adaugat " + addedFeedback);
-                            addFeedback(token,addedFeedback);
-                            const newFeedbacks = addedFeedback ? [...feedbacks,addedFeedback] : [...feedbacks];
-                            setFeedbacks(newFeedbacks);
-                            //history.goBack();
-                        }catch (error){
-                            console.log('Update place error',error);
-                        }
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-    }
-
-
-
 
     const handleBack = () => {
         history.goBack()
@@ -210,11 +144,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     }
 
     useEffect(()=>{
-        const fetchFeedbacksByPlaceId = async (place_id: number) => {
-            const feedbacksData = await getAllFeedbacksByPlace(token,place_id);
-            console.log("Aici is feedbackurile "+ feedbacksData);
-            setFeedbacks(feedbacksData);
-        }
         const fetchUsernameByUser = async () => {
             const user1 = await findUserByToken(token);
             setUser(user1);
@@ -222,7 +151,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
             const routeId = match.params.id || '';
             let routeIdNumber = +routeId;
             const visit = await findVisitByUserIdAndPlaceId(token,routeIdNumber??0,user1.id??0);
-            fetchFeedbacksByPlaceId(routeIdNumber);
             console.log("Vizita arata cam asa "+typeof visit);
             if (visit === ""){
                 setIsVisited(false);
@@ -254,8 +182,8 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const handleDeleteVisit = async(place_id: number | undefined) => {
         const visit = await findVisitByUserIdAndPlaceId(token,place_id??0,userId??0);
         const alert = await alertController.create({
-            header: 'Confirm cancel your trip',
-            message: 'Did you change your mind?',
+            header: 'Confirm delete',
+            message: 'Do you want to delete?',
             buttons: [
                 {
                     text: 'Cancel',
@@ -292,7 +220,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                 {/*<NetworkStatus/>*/}
                 {isVisited === false
                     ? <IonButton color="tertiary" onClick={()=> handleVisit(place?.place_id??0)}>
-                        Mark as visited
+                        Visit
                     </IonButton>
                     : <IonButton color="danger" onClick={() => handleDeleteVisit(place?.place_id??0)}>
                         Unvisit
@@ -309,47 +237,9 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                 </IonItem>
                 <IonItem>
                     <IonLabel position="fixed">Date when you'll be visiting: </IonLabel>
-                    <IonDatetime className="input_edit" displayFormat={IonDateTimeDateFormat} value={dateToString(bookedDate)}
+                    <IonDatetime className="input_edit" displayFormat={IonDateTimeDateFormat} value={dateToString(boookedDate)}
                                  onIonChange={e => setBookedDate(stringToDate(e.detail.value))}/>
                 </IonItem>
-                <IonCard>
-                    <IonCardSubtitle>
-                        List of feedbacks
-                    </IonCardSubtitle>
-                    <IonCardTitle>
-                        Feedbacks given for {place?.name}
-                    </IonCardTitle>
-                    <IonList>
-                        {feedbacks.map(feedback =>(
-                            <IonItem>
-                                <IonLabel>
-                                    <h3>{feedback.username}</h3>
-                                    <IonTextarea>
-                                        {feedback.feedback_text}
-                                    </IonTextarea>
-                                </IonLabel>
-                            </IonItem>
-
-                        ))}
-                    </IonList>
-                </IonCard>
-                <IonCard>
-                    <IonCardSubtitle>Leave some thoughts</IonCardSubtitle>
-                    <IonCardTitle>Give your opinion about {place?.name}</IonCardTitle>
-                    <IonItem>
-                        <IonLabel> Number of stars </IonLabel>
-                        <IonInput className="input_edit" type="number" value={stars}
-                                  onIonChange={e => setStars(e.detail.value ? +e.detail.value : 0)}/>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel> Feedback plot</IonLabel>
-                        <IonTextarea value={feedbackText} onIonChange={e => setFeedbackText(e.detail.value || '')} />
-                    </IonItem>
-                    <IonButton onClick={handleAddFeedback}>
-                        Add feedback
-                    </IonButton>
-                </IonCard>
-
                 <div>
                     {
                         photos.map(photo =>
