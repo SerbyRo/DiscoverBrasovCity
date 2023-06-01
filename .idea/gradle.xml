@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/app/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/app/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/camera/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/camera/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/filesystem/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/filesystem/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/geolocation/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/geolocation/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/haptics/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/haptics/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/keyboard/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/keyboard/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/network/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/network/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/preferences/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/preferences/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/status-bar/android" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/BrasovFinderFrontend/node_modules/@capacitor/status-bar/android" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

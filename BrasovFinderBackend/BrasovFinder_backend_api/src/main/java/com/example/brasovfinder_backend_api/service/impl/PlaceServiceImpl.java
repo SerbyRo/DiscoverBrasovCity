@@ -1,6 +1,5 @@
 package com.example.brasovfinder_backend_api.service.impl;
 
-import com.example.brasovfinder_backend_api.exception.InvalidDateException;
 import com.example.brasovfinder_backend_api.exception.NotFoundException;
 import com.example.brasovfinder_backend_api.model.Place;
 import com.example.brasovfinder_backend_api.model.Visit;
@@ -10,7 +9,7 @@ import com.example.brasovfinder_backend_api.service.VisitService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +28,12 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<Place> getAllPlaces() {
-
-        return placeRepository.findAll();
+        List<Place> places = placeRepository.findAll();
+        Collections.sort(places);
+        for (var place : places) {
+            System.out.println(place.getRelevanceScore());
+        }
+        return places;
 
     }
 
@@ -47,23 +50,16 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Place addPlace(Place place) throws InvalidDateException {
-        if (place.getBooked_date().compareTo(new Date())<0){
-            throw new InvalidDateException("The given date is in the past!");
-        }
+    public Place addPlace(Place place) {
         return placeRepository.save(place);
     }
 
     @Override
-    public Place updatePlace(Place newPlace,Long id) throws NotFoundException, InvalidDateException {
-        if (newPlace.getBooked_date().compareTo(new Date())<0){
-            throw new InvalidDateException("The given date is in the past!");
-        }
+    public Place updatePlace(Place newPlace,Long id) throws NotFoundException {
         return placeRepository.findById(id)
                 .map(place ->{
                     place.setPrice(newPlace.getPrice());
                     place.setName(newPlace.getName());
-                    place.setBooked_date(newPlace.getBooked_date());
                     place.setLongitude(newPlace.getLongitude());
                     place.setLatitude(newPlace.getLatitude());
                     place.setPoints(newPlace.getPoints());

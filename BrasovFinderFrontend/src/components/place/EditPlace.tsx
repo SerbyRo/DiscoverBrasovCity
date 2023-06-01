@@ -65,7 +65,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const {token} = useContext(AuthContext);
     const [name, setName] = useState<string>('');
     const [price, setPrice] = useState<number>(0);
-    const [bookedDate, setBookedDate] = useState<Date>(new Date());
     const [place, setPlace] = useState<PlaceProps>();
     const [points,setPoints] = useState<number>(0);
     const [placeState, setPlaceState] = useState<boolean>(false);
@@ -91,7 +90,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
             setPlace(placeData);
             setName(placeData.name);
             setPrice(placeData.price);
-            setBookedDate(placeData.booked_date);
             setLatitude(placeData.latitude);
             setLongitude(placeData.longitude);
             setPoints(placeData.points);
@@ -109,7 +107,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
             place_id: placeData.place_id,
             name:name,
             price: price,
-            booked_date: bookedDate,
             latitude:latitude??0,
             longitude:longitude??0,
             points:points
@@ -307,11 +304,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     <IonInput className="input_edit" type="number" value={price}
                               onIonChange={e => setPrice(e.detail.value ? +e.detail.value : 0)}/>
                 </IonItem>
-                <IonItem>
-                    <IonLabel position="fixed">Date when you'll be visiting: </IonLabel>
-                    <IonDatetime className="input_edit" displayFormat={IonDateTimeDateFormat} value={dateToString(bookedDate)}
-                                 onIonChange={e => setBookedDate(stringToDate(e.detail.value))}/>
-                </IonItem>
                 <IonCard>
                     <IonCardSubtitle>
                         List of feedbacks
@@ -368,7 +360,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                         <MyMap
                             lat={latitude}
                             lng={longitude}
-                            onMapClick={onMap()}
                         />
                     </div>}
                 {/*<IonLoading isOpen={saving}/>*/}

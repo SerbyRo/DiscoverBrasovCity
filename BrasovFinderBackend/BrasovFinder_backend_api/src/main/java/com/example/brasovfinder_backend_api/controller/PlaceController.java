@@ -32,6 +32,16 @@ public class PlaceController {
         return placeService.findPlaceById(id);
     }
 
+    @GetMapping("/{id}/stars")
+    @CrossOrigin
+    public Double findPlaceStars(@PathVariable("id") Long id) throws NotFoundException {
+        Optional<Place> place = placeService.findPlaceById(id);
+        if (place.isEmpty()) {
+            throw new NotFoundException("There is no such place.");
+        }
+        return place.get().getStars();
+    }
+
     @PostMapping
     @CrossOrigin
     public Place addPlace(@RequestBody Place place) throws InvalidDateException {
