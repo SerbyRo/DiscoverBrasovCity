@@ -54,8 +54,7 @@ public class FeedbackController {
                 .stars(feedbackDto.getStars())
                 .feedback_text(feedbackDto.getFeedback_text())
                 .build();
-
-
+        user.setPersonal_score(user.getPersonal_score()+1);
         return feedbackService.addFeedback(feedback);
     }
 
@@ -80,6 +79,9 @@ public class FeedbackController {
         if (!feedbackRepository.existsById(feedbackId)){
             throw new NotFoundException("Feedback not found!");
         }
+        Feedback feedback = feedbackRepository.findById(feedbackId).get();
+        User user = feedback.getUserFeedback();
+        user.setPersonal_score(user.getPersonal_score()-1);
         return feedbackService.deleteFeedback(feedbackId);
     }
 

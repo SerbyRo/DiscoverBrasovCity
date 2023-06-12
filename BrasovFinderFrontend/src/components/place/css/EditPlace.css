@@ -13,3 +13,25 @@
 .input-edit {
     background-color: green;
 }
+
+.feedback-list {
+    gap: 10px;
+    background-color: #ffff00;
+}
+
+.feedback-container {
+    padding: 20px 10px;
+    background-color: #ffff00;
+}
+
+.feedback-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #1ce00e;
+    border: 3px #ffff00 solid;
+    padding: 0 8px 8px 8px;
+}
+
+.edit-input {
+    background-color: transparent;
+}

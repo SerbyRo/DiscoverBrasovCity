@@ -186,7 +186,7 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
         );
     }
     return (
-        <Menu content={getContent()} background_color="white" />
+        <Menu content={getContent()} background_color_header="#333399" background_color_body="#33ccff" />
     );
 
 }

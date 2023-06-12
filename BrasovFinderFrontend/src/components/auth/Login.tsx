@@ -48,11 +48,11 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
     <IonPage className="ion-page1 background-image1">
       <IonHeader>
         <IonToolbar className="ion-toolbar1">
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Sign in</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-content1">
-          <form>
+          <form className="login-form">
               <IonLabel>
         <IonInput className="username-input1"
           placeholder="Username"
@@ -82,16 +82,15 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
                 message="Please try again"
                 buttons={['OK']}
             ></IonAlert>
-        )}  <br/>
-              <br/>
+        )}
               <IonRouterLink className="forgot-password-link" routerLink={`/forgot-password`}>
                   Forgot Password?
-              </IonRouterLink>
-        <IonButton className="login-button" onClick={handleLogin}>Login</IonButton>
-              <IonLabel>
-                  <IonTitle className="label1">Don't you have an account? Please register</IonTitle>
+              </IonRouterLink><br/>
+        <IonButton className="login-button" onClick={handleLogin}>Sign in</IonButton><br/>
+              <IonLabel className="label1">
+                  Don't you have an account? Please register!
               </IonLabel>
-          <IonButton className="register-button1" routerLink="/register" color="success">Register</IonButton>
+          <IonButton className="register-button1" routerLink="/register" color="success">Sign up</IonButton>
           </form>
       </IonContent>
     </IonPage>

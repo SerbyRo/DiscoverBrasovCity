@@ -285,8 +285,8 @@ export const Location: React.FC<RouteComponentProps> = () => {
 
     function getContent() {
         return(
-            <>
-                <LoadScript libraries={["places"]} googleMapsApiKey={mapsApiKey} >
+            <LoadScript libraries={["places"]} googleMapsApiKey={mapsApiKey}>
+                <div className="location-centered">
                     <Autocomplete>
                         <input
                             type='text'
@@ -323,17 +323,12 @@ export const Location: React.FC<RouteComponentProps> = () => {
                         ))}
                     </GoogleMap>
                     <IonItem>
-                        <IonLabel>The price  per ticket is </IonLabel>
+                        <IonLabel position="floating">The price  per ticket is </IonLabel>
                         <IonInput className="input_edit" type="number" value={pricePlace}
                                   onIonChange={e => setPricePlace(e.detail.value ? +e.detail.value : 0.0)}/>
                     </IonItem>
                     <IonItem>
-                        <IonLabel position="fixed">Date when you'll be visiting: </IonLabel>
-                        <IonDatetime className="input_edit" displayFormat={IonDateTimeDateFormat} value={dateToString(bookedDatePlace)}
-                                     onIonChange={e => setBookedDatePlace(stringToDate(e.detail.value))}/>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>The number of stars</IonLabel>
+                        <IonLabel position="floating">The number of points</IonLabel>
                         <IonInput className="input_edit" type="number" value={pointsPlace}
                                   onIonChange={e => setPointsPlace(e.detail.value ? +e.detail.value : 0.0)}/>
                     </IonItem>
@@ -342,12 +337,12 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             <IonIcon icon={add} slot="icon-only"></IonIcon>
                         </IonButton>
                     </div>
-                </LoadScript>
-            </>
+                </div>
+            </LoadScript>
         );
     }
     return (
-        <Menu content={getContent()} background_color="gray" />
+        <Menu content={getContent()} background_color_header="#333399" background_color_body="#33ccff" />
     );
 }
 

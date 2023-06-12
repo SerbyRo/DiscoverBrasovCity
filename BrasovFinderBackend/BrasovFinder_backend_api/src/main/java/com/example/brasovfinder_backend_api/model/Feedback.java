@@ -25,6 +25,15 @@ public class Feedback {
 
     private double stars;
 
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "feedback_id=" + feedback_id +
+                ", feedback_text='" + feedback_text + '\'' +
+                ", stars=" + stars +
+                '}';
+    }
+
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "place_id",nullable = false)
     @JsonIgnore

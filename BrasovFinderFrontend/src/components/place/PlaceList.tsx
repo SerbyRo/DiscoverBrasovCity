@@ -214,7 +214,7 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
         return (
             <>
                 {/*<IonSearchbar value={searchText} onIonChange={e => handleTextChange(e)}/>*/}
-                <IonSearchbar className="searchbar-content" value={searchText} onIonChange={handleSearch}></IonSearchbar>
+                <IonSearchbar color='success' className="searchbar-content" value={searchText} onIonChange={handleSearch}></IonSearchbar>
                 <IonList class="place-list1">
                     {filteredPlaces.map(place =>(//{place_id,name,booked_date,price,latitude,longitude}) =>
                          // <Place key={place_id} place_id={place_id} onEdit={place_id1 => history.push(`/place/${place_id1}`)} name={name} booked_date={booked_date} price={price}
@@ -259,7 +259,7 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
         );
     }
     return (
-        <Menu content={getContent()} background_color="#333399" />
+        <Menu content={getContent()} background_color_header="#333399" background_color_body="#33ccff" />
 );
 }
 

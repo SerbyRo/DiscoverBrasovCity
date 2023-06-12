@@ -37,7 +37,7 @@ export const ResetPassword = () => {
     };
 
     return (
-        <IonPage className="ion-page2">
+        <IonPage className="ion-page2 forgot-background">
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>
@@ -45,12 +45,13 @@ export const ResetPassword = () => {
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
-                <form>
+            <IonContent className="forgot-password-container">
+                <form className="reset-password-form">
                     <IonLabel>
                         Introduce new password:
                     </IonLabel>
                     <IonInput
+                        className="forgot-password-input"
                         type="password"
                         placeholder="New password"
                         value={password}
@@ -58,6 +59,7 @@ export const ResetPassword = () => {
                             (e) => setPassword(e.detail.value || '')
                         }/>
                     <IonInput
+                        className="forgot-password-input"
                         type="password"
                         placeholder="Confirm your password"
                         value={confirmPassword}

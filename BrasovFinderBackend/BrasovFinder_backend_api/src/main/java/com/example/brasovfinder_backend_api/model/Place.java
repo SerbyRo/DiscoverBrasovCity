@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "places")
-public class Place implements Comparable<Place> {
+public class Place implements Comparable<Place>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long place_id;
@@ -59,5 +59,17 @@ public class Place implements Comparable<Place> {
     @Override
     public int compareTo(@NotNull Place o) {
         return -Double.compare(getRelevanceScore(), o.getRelevanceScore());
+    }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "place_id=" + place_id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", points=" + points +
+                '}';
     }
 }

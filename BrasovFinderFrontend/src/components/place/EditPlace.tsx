@@ -5,6 +5,8 @@ import {PlaceContext} from "./PlaceProvider";
 import {AuthContext} from "../auth";
 import {PlaceProps} from "./PlaceProps";
 import {Photo, usePhotoGallery} from "../photo/usePhotoGallery";
+import {IonText, IonToast} from '@ionic/react';
+import { useRef } from 'react';
 import {
     IonHeader,
     IonPage,
@@ -61,7 +63,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const myLocation = useMyLocation();
     const [latitude,setLatitude] = useState<number|undefined>(undefined);
     const [longitude,setLongitude] = useState<number|undefined>(undefined);
-
+    const [showToast, setShowToast] = useState(false);
     const {token} = useContext(AuthContext);
     const [name, setName] = useState<string>('');
     const [price, setPrice] = useState<number>(0);
@@ -79,6 +81,9 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const [feedbacks, setFeedbacks] = useState<FeedbackProps[]>([]);
     const [stars,setStars] = useState<number>(0);
     const [feedbackText,setFeedbackText] = useState<string>('');
+
+    const [addFeedbackText, setAddFeedbackText] = useState<string>('');
+
     useEffect(()=>{
         const fetchPlaceById = async () =>{
             const routeId = match.params.id || '';
@@ -173,9 +178,17 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     handler: () => {
                         try{
                             console.log("Acesta este feedback-ul adaugat " + addedFeedback);
-                            addFeedback(token,addedFeedback);
-                            const newFeedbacks = addedFeedback ? [...feedbacks,addedFeedback] : [...feedbacks];
-                            setFeedbacks(newFeedbacks);
+                            addFeedback(token,addedFeedback).then(
+                                () => {
+                                    const newFeedbacks = addedFeedback ? [...feedbacks,addedFeedback] : [...feedbacks];
+                                    setFeedbacks(newFeedbacks);
+                                    setAddFeedbackText("Feedback successfully added!");
+                                    setShowToast(true);
+                                }
+                            ).catch(() => {
+                                setAddFeedbackText("You already sent a feedback for this place, please try another one!");
+                                setShowToast(true);
+                            });
                             //history.goBack();
                         }catch (error){
                             console.log('Update place error',error);
@@ -287,7 +300,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
         return (
             <>
                 {/*<NetworkStatus/>*/}
-                {isVisited === false
+                {!isVisited
                     ? <IonButton color="tertiary" onClick={()=> handleVisit(place?.place_id??0)}>
                         Mark as visited
                     </IonButton>
@@ -295,51 +308,57 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                         Unvisit
                     </IonButton>
                 }
-                <IonItem className="input_edit">
-                    <IonLabel>Name: </IonLabel>
-                    <IonInput  value={name} onIonChange={e => setName(e.detail.value || '')}/>
+                <IonItem>
+                    <IonLabel position="floating">Name: </IonLabel>
+                    <IonInput value={name} onIonChange={e => setName(e.detail.value || '')}/>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>The price  per ticket is </IonLabel>
+                    <IonLabel position="floating">The price per ticket is </IonLabel>
                     <IonInput className="input_edit" type="number" value={price}
                               onIonChange={e => setPrice(e.detail.value ? +e.detail.value : 0)}/>
                 </IonItem>
-                <IonCard>
+                <IonCard className="feedback-container">
                     <IonCardSubtitle>
                         List of feedbacks
                     </IonCardSubtitle>
                     <IonCardTitle>
                         Feedbacks given for {place?.name}
                     </IonCardTitle>
-                    <IonList>
+                    <IonList className="feedback-list">
                         {feedbacks.map(feedback =>(
-                            <IonItem>
-                                <IonLabel>
-                                    <h3>{feedback.username}</h3>
-                                    <IonTextarea>
+                            <div className="feedback-item">
+                                <IonText>
+                                    <h5>{feedback.username} ({feedback.stars} stars)</h5>
+                                    <IonText>
                                         {feedback.feedback_text}
-                                    </IonTextarea>
-                                </IonLabel>
-                            </IonItem>
+                                    </IonText>
+                                </IonText>
+                            </div>
 
                         ))}
                     </IonList>
                 </IonCard>
-                <IonCard>
+                <IonCard className="feedback-container">
                     <IonCardSubtitle>Leave some thoughts</IonCardSubtitle>
                     <IonCardTitle>Give your opinion about {place?.name}</IonCardTitle>
                     <IonItem>
-                        <IonLabel> Number of stars </IonLabel>
+                        <IonLabel position="floating"> Number of stars </IonLabel>
                         <IonInput className="input_edit" type="number" value={stars}
                                   onIonChange={e => setStars(e.detail.value ? +e.detail.value : 0)}/>
                     </IonItem>
                     <IonItem>
-                        <IonLabel> Feedback plot</IonLabel>
+                        <IonLabel position="floating"> Feedback plot</IonLabel>
                         <IonTextarea value={feedbackText} onIonChange={e => setFeedbackText(e.detail.value || '')} />
                     </IonItem>
                     <IonButton onClick={handleAddFeedback}>
                         Add feedback
                     </IonButton>
+                    <IonToast
+                        isOpen={showToast}
+                        onDidDismiss={() => setShowToast(false)}
+                        message= {addFeedbackText}
+                        duration={3000}
+                    />
                 </IonCard>
 
                 <div>
@@ -404,7 +423,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     }
 
     return (
-        <Menu content={getContent()} background_color="#ff0"/>
+        <Menu content={getContent()} background_color_header="#333399" background_color_body="#33ccff"/>
     );
 }
 

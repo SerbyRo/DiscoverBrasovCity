@@ -40,10 +40,10 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     public void resetPasswordRequest(String email) throws NotFoundException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(email);
-        String emailAddress = rootNode.asText();
-        System.out.println(emailAddress);
+        String emailAddress = rootNode.get("email").toString().replaceAll("\"", "");
+        System.out.println("Aici e mailu " + emailAddress);
         User user = userRepository.findByEmail(emailAddress);
-        System.out.println(user.getEmail());
+        System.out.println("Aici ai iar emailu " + user.getEmail());
 
         if (user.getEmail() == null){
             throw new NotFoundException();

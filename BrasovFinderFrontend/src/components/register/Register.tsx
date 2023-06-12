@@ -9,7 +9,7 @@ import {
     IonHeader,
     IonInput,
     IonLabel,
-    IonPage,
+    IonPage, IonRouterLink,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
@@ -170,7 +170,7 @@ export const Register : React.FC<RouteComponentProps> = ({history}) =>{
 
             <IonContent className="ion-content">
                 <form>
-                    <IonLabel className="username-label">
+                    <IonLabel className="register-form-label">
                         Username:
                         <IonInput className = "username-input"
                                   type="text"
@@ -195,9 +195,9 @@ export const Register : React.FC<RouteComponentProps> = ({history}) =>{
                                   }}
                         />
                         {!isUsernameValid && (
-                            <IonLabel color="danger">{usernameErrorMessage}</IonLabel>)}
+                            <IonLabel className="register-error-label">{usernameErrorMessage}</IonLabel>)}
                     </IonLabel>
-                    <IonLabel className="password-label">
+                    <IonLabel className="register-form-label">
                         Password:
                         <IonInput className = "password-input"
                                   type="password"
@@ -223,9 +223,9 @@ export const Register : React.FC<RouteComponentProps> = ({history}) =>{
 
                         />
                         {!isPasswordValid && (
-                            <IonLabel color="danger">{passwordErrorMessage}</IonLabel>)}
+                            <IonLabel className="register-error-label">{passwordErrorMessage}</IonLabel>)}
                     </IonLabel>
-                    <IonLabel className="email-label">
+                    <IonLabel className="register-form-label">
                         Email:
                         <IonInput className = "email-input"
                                   type="text"
@@ -251,12 +251,16 @@ export const Register : React.FC<RouteComponentProps> = ({history}) =>{
 
                         />
                         {!isEmailValid && (
-                            <IonLabel color="danger">{emailErrorMessage}</IonLabel>)}
+                            <IonLabel className="register-error-label">{emailErrorMessage}</IonLabel>)}
                     </IonLabel>
-                    <IonButton className="register-button" onClick={handleSubmit} color="secondary">Sign Up</IonButton>
+                    <IonButton className="register-button" onClick={handleSubmit} color="secondary">Create account</IonButton>
                     {errorMessage &&(
                         <span style={{color: 'red'}}>{errorMessage}</span>
                     )}
+                    <br/>
+                    <IonRouterLink className="sign-in-link" routerLink={`/login`}>
+                        Back to sign in
+                    </IonRouterLink>
                 </form>
             </IonContent>
         </IonPage>

@@ -9,9 +9,8 @@ import {FeedbackProps} from "./FeedbackProps";
 import {logoTiktok} from "ionicons/icons";
 import {UserProps} from "./UserProps";
 import {VisitProps} from "./VisitProps";
-
+import {useState} from "react";
 const placeUrl = `http://${baseUrl}/api/places`;
-
 
 export const getPlaces : (token:string) => Promise<PlaceProps[]> = (token) => {
     return withLogs(axios.get(`${placeUrl}`,authConfig(token)),'getPlaces');

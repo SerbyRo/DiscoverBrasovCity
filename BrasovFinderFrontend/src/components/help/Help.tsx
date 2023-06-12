@@ -12,7 +12,7 @@ import {
     IonCardHeader, IonCardTitle, IonIcon, IonButton
 } from "@ionic/react";
 import {QuestionCard} from "./QuestionCard";
-import {add, ellipse, female, radio} from "ionicons/icons";
+import {add, ellipse, female, radio, settings} from "ionicons/icons";
 
 export const Help: React.FC<RouteComponentProps> = () => {
     const questions = [
@@ -79,20 +79,46 @@ export const Help: React.FC<RouteComponentProps> = () => {
                             <QuestionCard
                                 question='Do you have any suggestion for some new locations that you want to add in your app?'
                                 answer='We want to extend and to enrich the virtual tour of the city and to offer a large variety of places. Please feel
-                                        free to complete our add place textfields. Any idea of a new and very interesting place to isit is more than welcomed.'
+                                        free to complete our add place textfields. Any idea of a new and very interesting place to visit is more than welcomed.'
                             />
                         </>
                     }
                 />
                 <QuestionCard
-                    question='Intrebare 3'
-                    answer={<p>Raspunsul la intrebarea 3</p>}
+                    question={
+                        <>
+                            <IonIcon icon={settings}></IonIcon>
+                            <IonLabel>
+                                Curiosities
+                            </IonLabel>
+                        </>
+                    }
+                    answer={<>
+                        <QuestionCard
+                            question='Why was a sorting formula with an artificial intelligence model used instead of a traditional sorting method?'
+                            answer='Utilizing a sorting formula with an artificial intelligence model offers several advantages over traditional sorting methods:
+                                    - complex decision-making: An AI model can take into account multiple factors simultaneously and make complex decisions based on
+                                    various input parameters
+                                    -adaptability and learning: AI models have the ability to learn and adapt over time. They can analyze
+                                    large amounts of data, identify patterns, and continuously improve their performance.
+                                    -scalability: AI models can efficiently process large amounts of data and sort through
+                                     extensive lists of tourist attractions.'
+                        />
+                        <QuestionCard
+                            question='When using Google Maps, how can users visualize the three available routes between two locations and determine the estimated
+                             travel time by both car and walking, additionally transit?'
+                            answer='When using Google Maps, users can easily visualize the three available routes between two locations and determine the estimated travel time by car, walking, and transit. Here is how:
+                            Enter the source and destination locations: In the search bar or text fields provided, enter the starting point (source) and the destination.iew the routes on the map: Once you have completed
+                             the textfields, Google Maps will display the three available routes on the map.'
+                        />
+                    </>}
                 />
             </IonList>
+
         )
     }
     return (
-        <Menu content={getContent()} background_color="#cc0000"/>
+        <Menu content={getContent()} background_color_header="#333399" background_color_body="#33ccff"/>
     );
 }
 

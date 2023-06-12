@@ -36,35 +36,54 @@ export const ForgotPassword : React.FC<RouteComponentProps> = () =>{
                     handler: () => {
                         console.log('Registration canceled');
                     }
-                }, {
+                }, // {
+                //     text: 'OK',
+                //     handler: () => {
+                //         fetch('http://localhost:8080/api/reset/reset-password', {
+                //             // mode: 'no-cors',
+                //             method: 'POST',
+                //             headers: {
+                //                 'Content-Type': 'application/json'
+                //             },
+                //             body: JSON.stringify(email)
+                //         })
+                //             .then(response => {
+                //                 console.log(email);
+                //                 if (!response.ok) {
+                //                     throw new Error('Network response was not ok');
+                //                 }
+                //                 //return response.json();
+                //             })
+                //             .then(data => {
+                //                 setIsSubmitting(false);
+                //                 setMessage("An email with the given instruction for reseting the oassword was sent ");
+                //                 history.push("/login");
+                //             })
+                //             .catch(error => {
+                //                 // afiseaza un mesaj de eroare sau executa o alta actiune
+                //                 setMessage('Email address not found');
+                //                 console.error('There was an error registering the user:', error);
+                //             });
+                //         console.log('Registration confirmed');
+                //     }
+                // }
+                {
                     text: 'OK',
-                    handler: () => {
-                        fetch('http://localhost:8080/api/reset/reset-password', {
-                            // mode: 'no-cors',
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(email)
-                        })
-                            .then(response => {
-                                console.log(email);
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
+                    handler: async () => {
+                        try {
+                            await axios.post('http://localhost:8080/api/reset/reset-password', {email}, {
+                                headers: {
+                                    'Content-Type': 'application/json'
                                 }
-                                //return response.json();
-                            })
-                            .then(data => {
-                                setIsSubmitting(false);
-                                setMessage("An email with the given instruction for reseting the oassword was sent ");
-                                history.push("/login");
-                            })
-                            .catch(error => {
-                                // afiseaza un mesaj de eroare sau executa o alta actiune
-                                setMessage('Email address not found');
-                                console.error('There was an error registering the user:', error);
                             });
-                        console.log('Registration confirmed');
+                            setIsSubmitting(false);
+                            setMessage("An email with the given instruction for resetting the password was sent");
+                            history.push("/login");
+                        } catch (error) {
+                            // Afiseaza un mesaj de eroare sau executa o alta actiune
+                            setMessage('Email address not found');
+                            console.error('There was an error registering the user:', error);
+                        }
                     }
                 }
             ]
@@ -74,28 +93,28 @@ export const ForgotPassword : React.FC<RouteComponentProps> = () =>{
     }
 
     return (
-        <IonPage className="ion-page2">
+        <IonPage className="ion-page2 forgot-background">
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>
-                        Reset your password
+                        Forgot your password
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
-                        <form>
+            <IonContent className="forgot-password-container">
+                        <form className="forgot-password-form">
                             <IonText>
                                 Introduce your email address to reset the password:
                             </IonText>
-                            <IonInput type="email" placeholder="email address" value={email} onIonChange={(e)=> setEmail(e.detail.value || '')}/>
+                            <IonInput className="forgot-password-input" type="email" placeholder="email address" value={email} onIonChange={(e)=> setEmail(e.detail.value || '')}/>
                             {message && <IonText color="danger">{message}</IonText>}
-                            <IonButton expand="block" disabled={isSubmitting} onClick={handleSubmit}>
+                            <IonButton className="send-mail-button send-mail-button" onClick={handleSubmit}>
                                 Send email
-                            </IonButton>
+                            </IonButton><br/>
+                            <IonRouterLink className="forgot-password-link" routerLink={`/login`}>
+                                Back to sign in
+                            </IonRouterLink>
                         </form>
-                <IonRouterLink className="forgot-password-link" routerLink={`/login`}>
-                    Sign up
-                </IonRouterLink>
             </IonContent>
         </IonPage>
     )

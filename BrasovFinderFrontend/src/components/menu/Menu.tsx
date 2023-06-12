@@ -19,7 +19,7 @@ import NetworkStatus from "../network/NetworkStatus";
 import PlaceList from "../place/PlaceList";
 import {UserProps} from "../place/UserProps";
 
-export const Menu = (props: {content: any, background_color?:any})  => {
+export const Menu = (props: {content: any, background_color_header?:any,background_color_body?: any})  => {
     const {logout} =useContext(AuthContext);
     const history = useHistory();
     function handleLogout() {
@@ -89,7 +89,7 @@ export const Menu = (props: {content: any, background_color?:any})  => {
                     </IonContent>
             </IonMenu>
             <IonPage  id="main-content">
-                <IonHeader style={{backgroundColor:props.background_color}}>
+                <IonHeader style={{backgroundColor:props.background_color_header}}>
                     <IonToolbar>
                         <IonButtons slot="start">
                             <IonMenuButton></IonMenuButton>
@@ -97,7 +97,7 @@ export const Menu = (props: {content: any, background_color?:any})  => {
                         <IonTitle>DiscoverCityBrasov</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent style={{backgroundColor:props.background_color}} className="ion-padding">
+                <IonContent style={{backgroundColor:props.background_color_body}} className="ion-padding">
                     {props.content}
                 </IonContent>
             </IonPage>

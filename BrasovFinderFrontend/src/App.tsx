@@ -33,6 +33,7 @@ import EditPlace from "./components/place/EditPlace";
 import MyAccount from "./components/myAccount/MyAccount";
 import Location from "./components/location/Location";
 import Help from "./components/help/Help";
+import Toast from "./components/toast/Toast";
 
 
 const App: React.FC = () => (
@@ -48,7 +49,7 @@ const App: React.FC = () => (
              <PrivateRoute component={EditPlace} path={"/place/:id"} exact={true}/>
               <PrivateRoute path={"/account"} component={MyAccount} exact={true}/>
               <PrivateRoute path={"/maps"} component={Location} exact={true}/>
-              <PrivateRoute path={"/statistics"} component={Menu} exact={true}/>
+              <PrivateRoute path={"/statistics"} component={Toast} exact={true}/>
               <PrivateRoute path={"/help"} component={Help} exact={true}/>
             <Route exact path="/" render={() => <Redirect to="/home"/>}/>
           </AuthProvider>

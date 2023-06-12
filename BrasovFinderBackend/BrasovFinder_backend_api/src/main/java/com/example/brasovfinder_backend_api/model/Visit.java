@@ -42,4 +42,11 @@ public class Visit implements Serializable {
     @JsonIgnore
     private User userVisit;
 
+    @Override
+    public String toString() {
+        return "Visit{" +
+                "visit_id=" + visit_id +
+                ", visitedAt=" + visitedAt +
+                '}';
+    }
 }
