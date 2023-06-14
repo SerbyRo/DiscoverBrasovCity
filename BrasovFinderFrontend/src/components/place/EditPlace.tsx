@@ -5,7 +5,7 @@ import {PlaceContext} from "./PlaceProvider";
 import {AuthContext} from "../auth";
 import {PlaceProps} from "./PlaceProps";
 import {Photo, usePhotoGallery} from "../photo/usePhotoGallery";
-import {IonText, IonToast} from '@ionic/react';
+import {IonSlide, IonSlides, IonText, IonToast} from '@ionic/react';
 import { useRef } from 'react';
 import {
     IonHeader,
@@ -81,6 +81,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const [feedbacks, setFeedbacks] = useState<FeedbackProps[]>([]);
     const [stars,setStars] = useState<number>(0);
     const [feedbackText,setFeedbackText] = useState<string>('');
+    const [currentSlide, setCurrentSlide] = useState<number>(0);
 
     const [addFeedbackText, setAddFeedbackText] = useState<string>('');
 
@@ -189,7 +190,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                                 setAddFeedbackText("You already sent a feedback for this place, please try another one!");
                                 setShowToast(true);
                             });
-                            //history.goBack();
                         }catch (error){
                             console.log('Update place error',error);
                         }
@@ -249,8 +249,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     const handleVisit = async (placeId: number) => {
         const visit = {
             place_id: placeId,
-            user_id: userId// Adaugă user_id în obiectul visit
-            // Alte proprietăți ale vizitei pe care dorești să le adaugi
+            user_id: userId
         };
 
         try {
@@ -300,14 +299,6 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
         return (
             <>
                 {/*<NetworkStatus/>*/}
-                {!isVisited
-                    ? <IonButton color="tertiary" onClick={()=> handleVisit(place?.place_id??0)}>
-                        Mark as visited
-                    </IonButton>
-                    : <IonButton color="danger" onClick={() => handleDeleteVisit(place?.place_id??0)}>
-                        Unvisit
-                    </IonButton>
-                }
                 <IonItem>
                     <IonLabel position="floating">Name: </IonLabel>
                     <IonInput value={name} onIonChange={e => setName(e.detail.value || '')}/>
@@ -316,7 +307,15 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     <IonLabel position="floating">The price per ticket is </IonLabel>
                     <IonInput className="input_edit" type="number" value={price}
                               onIonChange={e => setPrice(e.detail.value ? +e.detail.value : 0)}/>
-                </IonItem>
+                </IonItem><br/>
+                {!isVisited
+                    ? <IonButton className="edit-visit-button" color="tertiary" onClick={()=> handleVisit(place?.place_id??0)}>
+                        Mark as visited
+                    </IonButton>
+                    : <IonButton className="edit-visit-button" color="danger" onClick={() => handleDeleteVisit(place?.place_id??0)}>
+                        Unvisit
+                    </IonButton>
+                }
                 <IonCard className="feedback-container">
                     <IonCardSubtitle>
                         List of feedbacks
@@ -326,7 +325,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     </IonCardTitle>
                     <IonList className="feedback-list">
                         {feedbacks.map(feedback =>(
-                            <div className="feedback-item">
+                            <div>
                                 <IonText>
                                     <h5>{feedback.username} ({feedback.stars} stars)</h5>
                                     <IonText>
@@ -349,10 +348,12 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     <IonItem>
                         <IonLabel position="floating"> Feedback plot</IonLabel>
                         <IonTextarea value={feedbackText} onIonChange={e => setFeedbackText(e.detail.value || '')} />
-                    </IonItem>
-                    <IonButton onClick={handleAddFeedback}>
-                        Add feedback
-                    </IonButton>
+                    </IonItem><br/>
+                    <div className="add-feedback-button-container">
+                        <IonButton onClick={handleAddFeedback}>
+                            Add feedback
+                        </IonButton>
+                    </div>
                     <IonToast
                         isOpen={showToast}
                         onDidDismiss={() => setShowToast(false)}
@@ -360,19 +361,31 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                         duration={3000}
                     />
                 </IonCard>
-
-                <div>
-                    {
-                        photos.map(photo =>
-                            <img height="300px"
-                                 src={photo!!.photo_path}
-                                 onClick={() => setPhotoToDelete(photo)}
-                                 alt="place"
-                            />
-                        )
-                    }
-                </div>
-
+                <br/><br/>
+                {photos.length > 0 &&
+                    <>
+                        <IonSlides key={photos.length + "" + Math.random()} pager={true} options={{
+                            initialSlide: currentSlide,
+                            speed: 400,
+                        }}>
+                            {
+                                photos.map(photo =>
+                                    <IonSlide>
+                                        <img height="auto"
+                                             width="100%"
+                                             src={photo!!.photo_path}
+                                             onClick={() => {
+                                                 setPhotoToDelete(photo);
+                                                 setCurrentSlide(photos.indexOf(photo));
+                                             }}
+                                             alt="place"
+                                        />
+                                    </IonSlide>
+                                )
+                            }
+                        </IonSlides><br/><br/>
+                    </>
+                }
 
                 {latitude && longitude &&
                     <div style={{width: "100%"}}>
@@ -395,7 +408,12 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                 </div>
 
                 <IonFab vertical="bottom" horizontal="center" slot="fixed">
-                    <IonFabButton onClick={() => { console.log(place!!.name);return takePhoto(place!!.name);}}>
+                    <IonFabButton onClick={() => {
+                        console.log(place!!.name);
+                        takePhoto(place!!.name).then(() => {
+                            setCurrentSlide(photos.length);
+                        });
+                    }}>
                         <IonIcon icon={camera}/>
                     </IonFabButton>
                 </IonFab>
@@ -407,9 +425,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                         icon: trash,
                         handler: () => {
                             if (photoToDelete) {
-                                deletePhoto(photoToDelete).then(_ => {
-                                });
-                                setPhotoToDelete(undefined);
+                                deletePhoto(photoToDelete);
                             }
                         }
                     }, {

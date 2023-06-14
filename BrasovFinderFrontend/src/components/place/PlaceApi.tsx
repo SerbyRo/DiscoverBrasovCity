@@ -10,6 +10,7 @@ import {logoTiktok} from "ionicons/icons";
 import {UserProps} from "./UserProps";
 import {VisitProps} from "./VisitProps";
 import {useState} from "react";
+import toast from "../toast/Toast";
 const placeUrl = `http://${baseUrl}/api/places`;
 
 export const getPlaces : (token:string) => Promise<PlaceProps[]> = (token) => {
@@ -19,6 +20,15 @@ export const getPlaces : (token:string) => Promise<PlaceProps[]> = (token) => {
 export const findPlaceById : (token: string,place_id:number) => Promise<PlaceProps> =
     (token,place_id) =>{
     return withLogs(axios.get(`${placeUrl}/${place_id}`,authConfig(token)),'findPlaceById');
+}
+export const findTop5UsersByPersonal_scoreDesc: (token: string) => Promise<UserProps[]> =
+    (token) =>{
+        return withLogs(axios.get(`${placeUrl}/auth/standings`, authConfig(token)), 'findFirst5UsersByPersonalScore');
+}
+
+export const findUserRankByPersonal_score: (token: string,user_id: number) => Promise<UserProps> =
+    (token, user_id) => {
+        return withLogs(axios.get(`${placeUrl}/auth/standings/${user_id}`,authConfig(token)),'findUserRank');
 }
 
 export const findVisitByUserIdAndPlaceId: (token:string,place_id:number,user_id:number) => Promise<VisitProps> =

@@ -36,7 +36,7 @@ public class ImageController {
     @GetMapping("/{placeId}/imagesOne")
     @CrossOrigin
     public Image getFirstImageByPlaceId(@PathVariable("placeId") Long placeId) throws NotFoundException {
-        return imageService.findByPlaceId(placeId).stream().findFirst().get();
+        return imageService.findByPlaceId(placeId).stream().findFirst().orElse(null);
     }
 
     @PostMapping("/{placeId}/images")

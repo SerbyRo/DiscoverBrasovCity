@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,19 @@ public class AuthenticationService {
         }
     }
 
+    public Optional<User> findUserById(Integer id) throws NotFoundException {
+        Optional<User> user = repository.findById(id);
+        if (user.isPresent()){
+            return user;
+        }
+        else
+        {
+            throw new NotFoundException("User not found with id "+id);
+        }
+    }
+
+
+
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -59,6 +73,15 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public List<User> findTop5ByOrderByPersonal_scoreDesc(){
+        List<User> standingsUsers = repository.findTop5UsersByPersonal_scoreDesc();
+        return standingsUsers;
+    }
+
+    public Integer findUserRankByPersonal_score(Integer user_id){
+        return repository.findUserRankByPersonal_score(user_id);
     }
 
 }

@@ -4,3 +4,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.source-input-maps{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

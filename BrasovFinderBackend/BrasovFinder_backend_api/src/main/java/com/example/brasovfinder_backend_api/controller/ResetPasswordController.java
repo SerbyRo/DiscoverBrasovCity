@@ -15,10 +15,6 @@ public class ResetPasswordController {
     private final PasswordResetServiceImpl passwordResetService;
 
 
-//    @Autowired
-//    public ResetPasswordController(PasswordResetServiceImpl passwordResetService) {
-//        this.passwordResetService = passwordResetService;
-//    }
 
     @PostMapping("/reset-password")
     @CrossOrigin

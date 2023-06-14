@@ -29,11 +29,9 @@ export function usePhotoGallery(token: string|null = null, place_id:number |unde
 
             if (token)
                  savedImage = await uploadPhoto(token, JSON.stringify({photo_path: cameraPhoto.base64String}),place_id??0)
-            //setPhotos(photos);
             console.log("A adaugat imaginea" ,photos);
             const fileName = name + "=>" + new Date().getTime() + '.jpeg';
             const savedFileImage = await savePicture(cameraPhoto, fileName);
-            //const newPhotos = [savedImage, ...photos];
             const newPhotos = savedImage ? [...photos,savedImage] : [...photos];
             console.log("A ajuns aici "+ place_id + " si are numele " + cameraPhoto.base64String);
             setPhotos(newPhotos);
@@ -89,9 +87,11 @@ export function usePhotoGallery(token: string|null = null, place_id:number |unde
     }, []);
 
     const deletePhoto = async (photo: ImageProps) => {
-        const newPhotos = await deleteImage(token??'',place_id??0,photo.image_id??0);
-        const photosString = await getAllImages(token??'',place_id??0);
-        setPhotos(photosString);
+        deleteImage(token??'',place_id??0,photo.image_id??0)
+            .then(() => {
+                const newPhotos = photos.filter(photo1 => photo1 != photo);
+                setPhotos(newPhotos);
+            });
     };
 
     return {

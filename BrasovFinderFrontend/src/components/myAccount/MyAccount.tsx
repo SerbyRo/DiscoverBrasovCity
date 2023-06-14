@@ -29,6 +29,7 @@ import place from "../place/Place";
 import {VisitProps} from "../place/VisitProps";
 import {trash} from "ionicons/icons";
 import {alertController} from "@ionic/core";
+import './css/MyAccount.css';
 
 const MyAccount : React.FC<RouteComponentProps> = () => {
     const {token} = useContext(AuthContext);
@@ -105,9 +106,9 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
 
     function getContent() {
         return(
-            <>
-                <IonListHeader>
-                    <IonLabel>
+            <div className="my-account-container">
+                <IonListHeader className="my-account-container">
+                    <IonLabel className="profile-label">
                         Your Profile
                     </IonLabel>
                 </IonListHeader>
@@ -115,7 +116,7 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                     <img src="/assets/avatar.svg"/>
                 </IonAvatar>
 
-                <IonListHeader>
+                <IonListHeader className="my-account-container">
                     <IonLabel>
                         Welcome {user?.username}
                     </IonLabel>
@@ -130,19 +131,19 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                     </IonLabel>
                 </IonChip>
 
-                <IonChip color="success" className="ion-margin-start">
+                <IonChip color="danger" className="ion-margin-start points-chip">
                     <IonLabel>
                         You acumulated {user?.personal_score} points so far
                     </IonLabel>
                 </IonChip>
-                <IonList>
-                    <IonListHeader>
+                <IonList className="my-account-list">
+                    <IonListHeader className="my-account-list">
                         {user?.personal_score === 0 ? <IonLabel> You have not visited any place yet </IonLabel>
                             :<IonLabel> Places visited by you </IonLabel>}
                     </IonListHeader>
                     {visits.map(visit =>(
                         <IonRouterLink routerLink={`/place/${visit.place_id}`}>
-                            <IonItem>
+                            <IonItem className="list-feedbacks" color="primary">
                                 <IonLabel>
                                     <h3>{visit.name}</h3>
                                     {visit.timeSinceVisit === 0
@@ -156,7 +157,7 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
 
                     ))}
                 </IonList>
-                <IonCard className="apps-card">
+                <IonCard className="apps-card my-account-list">
                     <IonCardHeader>
                         <IonCardSubtitle>
                             Your feedbacks
@@ -165,16 +166,17 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                             Preview of the given feedbacks
                         </IonCardTitle>
                     </IonCardHeader>
-                        <IonList>
+                        <IonList className="my-account-list">
                             {feedbacks.map(feedback => (
-                                <IonItem>
+                                <IonItem className="my-account-list">
                                     <IonLabel>
                                         <h3>{feedback.place_name}</h3>
                                         <IonTextarea>
                                             {feedback.feedback_text}
                                         </IonTextarea>
                                     </IonLabel>
-                                    <IonButton color="danger" onClick={()=>handleDeleteFeedback(feedback.feedback_id)}>
+                                    <IonButton color="danger" onClick={()=>handleDeleteFeedback(feedback.feedback_id)}
+                                            className="my-account-delete-button">
                                         <IonIcon icon={trash} slot="icon-only"></IonIcon>
                                     </IonButton>
                                 </IonItem>
@@ -182,7 +184,7 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                         </IonList>
 
                 </IonCard>
-            </>
+            </div>
         );
     }
     return (

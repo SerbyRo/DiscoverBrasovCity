@@ -53,8 +53,7 @@ export const Location: React.FC<RouteComponentProps> = () => {
                 // eslint-disable-next-line no-undef
                 const directionsService = new google.maps.DirectionsService();
 
-                // const origin = { lat: 46.77478156204557, lng: 23.6217358225497 };
-                // const destination = { lat: 45.6525105, lng: 25.6105654 };
+
 
                 // @ts-ignore
                 const origin = source;
@@ -121,9 +120,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                     const results = await Promise.all([directionPromise1,directionPromise2,directionPromise3]);
                     const directionsResults = results as google.maps.DirectionsResult[];
                     setDirections(directionsResults);
-                    // if (results){
-                    //     setLatitudeGeocoder(directionsResults[0].geometry.location.lat());
-                    // }
                         // @ts-ignore
                     console.log("Aici e mapsu" + results[0].routes[0].legs[0].duration.text);
                     // @ts-ignore
@@ -185,7 +181,7 @@ export const Location: React.FC<RouteComponentProps> = () => {
                                 setCenter({lat: latitudeGeocoder1, lng: longitudeGeocoder1});
                             }
 
-                            // Folosește latitudinea și longitudinea cum ai nevoie
+
 
 
                         } else {
@@ -195,9 +191,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                     });
 
                 } catch (error) {
-                    // if (error.message.includes('ZERO_RESULTS')) {
-                    //     console.log('Nu a fost găsită nicio rută între sursă și destinație.');
-                    // } else
                     if (error.message.includes('NOT_FOUND')) {
                         console.log('Adresa sursă sau adresa destinație nu au fost găsite.');
                     } else {
@@ -271,7 +264,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             console.log("Acesta este place-ul adaugat " + addedPlace);
                             createPlace(token,addedPlace);
                             history.push("/home");
-                            //history.goBack();
                         }catch (error){
                             console.log('Update place error',error);
                         }
@@ -287,13 +279,11 @@ export const Location: React.FC<RouteComponentProps> = () => {
         return(
             <LoadScript libraries={["places"]} googleMapsApiKey={mapsApiKey}>
                 <div className="location-centered">
-                    <Autocomplete>
+                    <Autocomplete className="source-input-maps">
                         <input
                             type='text'
                             placeholder='Your location'
                             ref = {sourceRef}
-                            //value={source}
-                            className="clientFormDiv"
                             onBlur={(event)=>{
                                 setCalculateSource(true);
                                 setRecall(recall+1);
@@ -302,12 +292,14 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             required
                         />
                     </Autocomplete>
+                </div>
+                    <br/>
+                    <br/>
                     <Autocomplete>
                         <input
                             type='text'
                             placeholder='Place location'
                             ref = {destinationRef}
-                            //value={destination1}
                             className="clientFormDiv"
                             onBlur={(event)=>{
                                 setCalculateDestination(true);
@@ -337,7 +329,6 @@ export const Location: React.FC<RouteComponentProps> = () => {
                             <IonIcon icon={add} slot="icon-only"></IonIcon>
                         </IonButton>
                     </div>
-                </div>
             </LoadScript>
         );
     }

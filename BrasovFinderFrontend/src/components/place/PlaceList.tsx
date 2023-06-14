@@ -136,30 +136,21 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
             setUserId(user1.id);
             console.log("Id-ul userului preluat este ",user1?.id);
 
-            // const visit = await findVisitByUserIdAndPlaceId(token,placeId??0,user1.id??0);
-            // console.log("Vizita arata cam asa "+typeof visit);
-            // if (visit === ""){
-            //     setVisitPlace(true);
-            // }
-            // else
-            // {
-            //     setVisitPlace(false);
-            // }
+            const visit = await findVisitByUserIdAndPlaceId(token,placeId??0,user1.id??0);
+            console.log("Vizita arata cam asa "+typeof visit);
+            if (visit === ""){
+                setVisitPlace(true);
+            }
+            else
+            {
+                setVisitPlace(false);
+            }
         }
         fetchUsernameByUser();
     },[]);
 
-    // const handleGetVisit = async (place_id: number) =>{
-    //     try {
-    //         const visit1 = await findVisitByUserIdAndPlaceId(token,place_id,userId??0);
-    //         setVisit(visit1);
-    //     }catch (error){
-    //             console.log("Failed to fetch visit!");
-    //         }
-    //     }
 
-
-
+    
 
 
 
@@ -202,6 +193,7 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
 
     const getOnePhoto = async (place_id: number) => {
         const photo = await findFirstImageById(token, place_id);
+        console.log(place_id, photo);
         if (!photo) {
             return null;
         }
@@ -214,11 +206,9 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
         return (
             <>
                 {/*<IonSearchbar value={searchText} onIonChange={e => handleTextChange(e)}/>*/}
-                <IonSearchbar color='success' className="searchbar-content" value={searchText} onIonChange={handleSearch}></IonSearchbar>
+                <IonSearchbar className="searchbar-content" value={searchText} onIonChange={handleSearch}></IonSearchbar>
                 <IonList class="place-list1">
-                    {filteredPlaces.map(place =>(//{place_id,name,booked_date,price,latitude,longitude}) =>
-                         // <Place key={place_id} place_id={place_id} onEdit={place_id1 => history.push(`/place/${place_id1}`)} name={name} booked_date={booked_date} price={price}
-                         //        latitude={latitude} longitude={longitude}/>
+                    {filteredPlaces.map(place =>(
                         <IonCard className={`card-item1 ${visitPlace ? "visited-card" : "unvisited-card"}`} key={place.place_id}>
                             {photos[place.place_id??0]}
                             {/*{setPlaceId(place.place_id??0)}*/}
@@ -242,7 +232,6 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
                                     <IonIcon icon={trash} slot="icon-only"></IonIcon>
                                 </IonButton>
                             </div>
-
                         </IonCard>
                     ))}
                 </IonList>

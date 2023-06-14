@@ -27,7 +27,6 @@ form {
 
 
 .register-button{
-    /*background-color: #2dd36f;*/
     color: #ffffff;
     border: none;
     border-radius: 4px;
@@ -62,7 +61,7 @@ ion-toolbar {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    height: 100vh; /* înălțimea containerului va fi egala cu înălțimea ferestrei */
+    height: 100vh;
 }
 
 .background-image {

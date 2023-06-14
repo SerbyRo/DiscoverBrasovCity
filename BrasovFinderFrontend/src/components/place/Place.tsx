@@ -18,9 +18,7 @@ interface PlacePropsExt extends PlaceProps {
     onEdit: (_id?: number) => void;
 }
 
-// interface PlacePropsExt extends PlaceProps {
-//     onEdit: (place_id?: string) => void;
-// }
+
 
 const Place: React.FC<PlacePropsExt> = ({place_id, name,price,onEdit,latitude,longitude})=>{
     return(

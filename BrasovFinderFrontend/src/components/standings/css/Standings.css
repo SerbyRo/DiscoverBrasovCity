@@ -1,0 +1,14 @@
+.my-standings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.chip-standings{
+    width: 100%;
+}
+
+.chip-standings2{
+    width: 80%;
+}

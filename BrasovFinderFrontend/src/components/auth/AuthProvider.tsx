@@ -9,7 +9,7 @@ const log = getLogger('AuthProvider');
 type LoginFn = (username?: string, password?: string) => void;
 type LogoutFn = () => void;
 
-// const { Storage } = Plugins;
+
 const Storage = Preferences;
 
 export interface AuthState {

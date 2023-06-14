@@ -1,0 +1,26 @@
+.list-feedbacks{
+    --ion-color-primary: #8BC34A !important;
+    --ion-color-primary-contrast: black !important;
+}
+
+.profile-label{
+    font-size: 25px;
+    font-style: italic;
+}
+
+.my-account-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.my-account-list {
+    min-width: 90%;
+    --ion-color-primary: purple !important;
+}
+
+.my-account-delete-button {
+    position: absolute;
+    right: 10%;
+    bottom: 8%;
+}
