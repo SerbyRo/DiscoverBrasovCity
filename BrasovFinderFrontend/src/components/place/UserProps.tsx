@@ -1,3 +1,5 @@
+import {Role} from "./Role";
+
 export interface UserProps{
     id?: number;
     username: string;
@@ -5,5 +7,5 @@ export interface UserProps{
     email?: string;
     personal_score?:number;
     position?: number;
-    role?: number;
+    role?: Role;
 }

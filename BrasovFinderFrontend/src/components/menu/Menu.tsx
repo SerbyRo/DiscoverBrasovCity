@@ -32,8 +32,8 @@ export const Menu = (props: {content: any, background_color_header?:any,backgrou
         <>
             <IonMenu contentId="main-content" >
                 <IonHeader className="background-menu">
-                        <IonToolbar>
-                            <IonTitle>Menu</IonTitle>
+                        <IonToolbar className="toolbar-menu">
+                            <IonTitle className="menu-font-size">Menu</IonTitle>
                         </IonToolbar>
                     </IonHeader>
                     <IonContent className="ion-padding background-menu" >
@@ -73,7 +73,7 @@ export const Menu = (props: {content: any, background_color_header?:any,backgrou
                             </IonRouterLink>
                             <IonRouterLink className="help-last-element" routerLink="/help">
                                 <div className="list-element-div">
-                                    <IonIcon className="icon-style" icon={help} slot="start"></IonIcon>
+                                    <IonIcon className="icon-style-help" icon={help} slot="start"></IonIcon>
                                     <IonLabel className="text-style">Help
                                     </IonLabel>
                                 </div>

@@ -5,10 +5,40 @@
     text-align: center;
 }
 
+h1,h2{
+    font-size: 20px;
+    font-style: italic;
+}
+
 .chip-standings{
     width: 100%;
 }
 
 .chip-standings2{
     width: 80%;
+
+    --ion-color-primary-shade: white;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.p{
+    color: white;
+}
+
+.first-place {
+    width: 80%;
+    --ion-color-primary-shade: white;
+    background-color: rgba(255, 215, 0, 0.9);
+}
+
+.second-place {
+    width: 80%;
+    --ion-color-primary-shade: white;
+    background-color: rgba(192, 192, 192, 0.9);
+}
+
+.third-place {
+    width: 80%;
+    --ion-color-primary-shade: white;
+    background-color: rgba(205, 127, 50, 0.9);
 }

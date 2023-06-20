@@ -1,4 +1,43 @@
 .card-question-container{
-    --ion-color-primary: #eeaaee !important;
+    --ion-color-primary: transparent !important;
 }
+
+.fade-in {
+    animation: fadeIn 2s;
+}
+
+.fade{
+    transition: max-height 3s ease-in-out;
+    overflow: hidden;
+}
+
+.fade-out {
+    animation: fadeOut 2s;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0%}
+    100%{ opacity: 100%}
+}
+
+
+@keyframes fadeOut {
+    0% {opacity: 100%}
+    100%{ opacity: 0%}
+}
+
+.fade.hidden {
+    max-height: 0;
+}
+
+.fade.visible {
+    max-height: 50px;
+}
+
+.li-container{
+    list-style: none;
+    width: 100%;
+}
+
+
 

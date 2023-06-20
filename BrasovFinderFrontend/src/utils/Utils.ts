@@ -1,5 +1,5 @@
 import dateFormat from "dateformat";
-
+import './css/Utils.css'
 const libraryDateFormat = "yyyy-mm-dd HH:mm";
 export function dateToString(date: Date | undefined): string {
     if (typeof date !== "undefined")
@@ -21,5 +21,18 @@ export function getRankString(rank: number): string{
                 case 3: return rank + "rd";
                 default: return rank + "th";
             }
+    }
+}
+
+export function getChipClass(rank: number): string {
+    switch (rank) {
+        case 1:
+            return 'gold';
+        case 2:
+            return 'silver';
+        case 3:
+            return 'bronze';
+        default:
+            return '';
     }
 }

@@ -4,14 +4,25 @@ import {AuthContext} from "../auth";
 import {UserProps} from "../place/UserProps";
 import {FeedbackProps} from "../place/FeedbackProps";
 import {findUserByToken} from "../auth/authApi";
-import {IonButton, IonDatetime, IonIcon, IonInput, IonItem, IonLabel, IonListHeader} from "@ionic/react";
+import {
+    IonButton,
+    IonDatetime,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonListHeader
+} from "@ionic/react";
 import {Menu} from "../menu/Menu";
 import {mapsApiKey} from "../map/key/mapsApiKey";
 import {Autocomplete, DirectionsRenderer, GoogleMap, LoadScript} from "@react-google-maps/api";
 import {dateToString} from "../../utils/Utils";
-import {add, trash} from "ionicons/icons";
+import {add, camera, trash} from "ionicons/icons";
 import {addFeedback, addVisit, createPlace} from "../place/PlaceApi";
 import {alertController} from "@ionic/core";
+import './css/Location.css';
 
 
 export const Location: React.FC<RouteComponentProps> = () => {
@@ -279,10 +290,11 @@ export const Location: React.FC<RouteComponentProps> = () => {
         return(
             <LoadScript libraries={["places"]} googleMapsApiKey={mapsApiKey}>
                 <div className="location-centered">
-                    <Autocomplete className="source-input-maps">
+                    <h3 className="location-title">Your current location</h3>
+                    <Autocomplete>
                         <input
                             type='text'
-                            placeholder='Your location'
+                            placeholder='Enter your location'
                             ref = {sourceRef}
                             onBlur={(event)=>{
                                 setCalculateSource(true);
@@ -290,44 +302,56 @@ export const Location: React.FC<RouteComponentProps> = () => {
                                 handleSourceChanged(event);
                             }}
                             required
+                            className="source-input-maps"
                         />
                     </Autocomplete>
                 </div>
-                    <br/>
-                    <br/>
+                <div className="location-centered">
+                    <h3 className="location-title">Place location</h3>
                     <Autocomplete>
                         <input
                             type='text'
-                            placeholder='Place location'
+                            placeholder='Enter place location'
                             ref = {destinationRef}
-                            className="clientFormDiv"
                             onBlur={(event)=>{
                                 setCalculateDestination(true);
                                 setRecall(recall+1);
                                 handleDestinationChanged(event);
                             }}
                             required
+                            className="destination-input-maps"
                         />
                     </Autocomplete>
+                </div>
                     <GoogleMap onLoad={() => setIsLoaded(true)} mapContainerStyle={containerStyle} center={center} zoom={8}>
                         {directionsOptions?.map(({ directions, options }) => (
                             <DirectionsRenderer directions={directions} options={options} />
                         ))}
                     </GoogleMap>
-                    <IonItem>
-                        <IonLabel position="floating">The price  per ticket is </IonLabel>
-                        <IonInput className="input_edit" type="number" value={pricePlace}
+                <div className="container-add-input-place">
+                    <IonItem className="input-add-place">
+                        <IonLabel position="floating">The price per ticket is </IonLabel>
+                        <IonInput type="number" value={pricePlace}
                                   onIonChange={e => setPricePlace(e.detail.value ? +e.detail.value : 0.0)}/>
                     </IonItem>
-                    <IonItem>
+                </div>
+                <div className="container-add-input-place">
+                    <IonItem className="input-add-place">
                         <IonLabel position="floating">The number of points</IonLabel>
                         <IonInput className="input_edit" type="number" value={pointsPlace}
                                   onIonChange={e => setPointsPlace(e.detail.value ? +e.detail.value : 0.0)}/>
                     </IonItem>
-                    <div>
-                        <IonButton color="primary" onClick={()=> addPlace()}>
-                            <IonIcon icon={add} slot="icon-only"></IonIcon>
-                        </IonButton>
+                </div>
+
+                    <div className="add-feedback-button-container">
+                        {/*<IonButton className="add-place-button-container" color="success" onClick={()=> addPlace()}>*/}
+                        {/*    <IonIcon icon={add} slot="icon-only"></IonIcon>*/}
+                        {/*</IonButton>*/}
+                            <IonFabButton color="success" onClick={() => {
+                               addPlace()
+                            }}>
+                                <IonIcon icon={add}/>
+                            </IonFabButton>
                     </div>
             </LoadScript>
         );

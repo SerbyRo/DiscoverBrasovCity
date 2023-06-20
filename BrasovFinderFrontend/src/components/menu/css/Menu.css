@@ -1,5 +1,13 @@
 .background-menu {
-    background-color: #9933ff;
+    background-color: #3399ff;
+}
+
+.toolbar-menu {
+    --ion-color-primary: purple;
+}
+
+.menu-font-size {
+    font-size: 30px;
 }
 
 .ion-item11{
@@ -32,15 +40,29 @@
 .icon-style{
     height:30px;
     width:30px;
-    color: #1ce00e;
+    color: white;
 }
+
+.icon-style-help {
+    height: 30px;
+    width: 30px;
+    color: white;
+    font-weight: bold;
+}
+
+.list-element-div .icon-style-help {
+    margin-left: 8%;
+    height:35px;
+}
+
 .list-element-div .icon-style{
     margin-left: 8%;
     height:35px;
 }
 
 .text-style{
-    color: #001a00;
+    color: white;
+    font-size: 24px;
 }
 
 .list-element-div .text-style {

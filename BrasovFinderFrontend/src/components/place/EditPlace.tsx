@@ -298,25 +298,30 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
     function getContent(){
         return (
             <>
-                {/*<NetworkStatus/>*/}
-                <IonItem>
-                    <IonLabel position="floating">Name: </IonLabel>
-                    <IonInput value={name} onIonChange={e => setName(e.detail.value || '')}/>
-                </IonItem>
-                <IonItem>
-                    <IonLabel position="floating">The price per ticket is </IonLabel>
-                    <IonInput className="input_edit" type="number" value={price}
-                              onIonChange={e => setPrice(e.detail.value ? +e.detail.value : 0)}/>
-                </IonItem><br/>
-                {!isVisited
-                    ? <IonButton className="edit-visit-button" color="tertiary" onClick={()=> handleVisit(place?.place_id??0)}>
-                        Mark as visited
-                    </IonButton>
-                    : <IonButton className="edit-visit-button" color="danger" onClick={() => handleDeleteVisit(place?.place_id??0)}>
-                        Unvisit
-                    </IonButton>
-                }
-                <IonCard className="feedback-container">
+                <div className="container-input">
+                    <IonItem className="input-edit">
+                        <IonLabel position="floating">Name: </IonLabel>
+                        <IonInput className="input-font-size-attribute-place" value={name} onIonChange={e => setName(e.detail.value || '')}/>
+                    </IonItem>
+                </div>
+                <div className="container-input">
+                    <IonItem className="input-edit">
+                        <IonLabel position="floating">The price per ticket is </IonLabel>
+                        <IonInput className="input-font-size-attribute-place" type="number" value={price}
+                                  onIonChange={e => setPrice(e.detail.value ? +e.detail.value : 0)}/>
+                    </IonItem>
+                </div>
+                <div className="edit-visit-container">
+                    {!isVisited
+                        ? <IonButton className="edit-visit-button" color="tertiary" onClick={()=> handleVisit(place?.place_id??0)}>
+                            Mark as visited
+                        </IonButton>
+                        : <IonButton className="edit-visit-button" color="danger" onClick={() => handleDeleteVisit(place?.place_id??0)}>
+                            Unvisit
+                        </IonButton>
+                    }
+                </div>
+                <IonList className="feedback-container">
                     <IonCardSubtitle>
                         List of feedbacks
                     </IonCardSubtitle>
@@ -326,31 +331,34 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                     <IonList className="feedback-list">
                         {feedbacks.map(feedback =>(
                             <div>
-                                <IonText>
+                                <IonText className="feedback-item">
                                     <h5>{feedback.username} ({feedback.stars} stars)</h5>
                                     <IonText>
                                         {feedback.feedback_text}
                                     </IonText>
                                 </IonText>
                             </div>
-
                         ))}
                     </IonList>
-                </IonCard>
-                <IonCard className="feedback-container">
+                </IonList>
+                <IonList className="feedback-container">
                     <IonCardSubtitle>Leave some thoughts</IonCardSubtitle>
                     <IonCardTitle>Give your opinion about {place?.name}</IonCardTitle>
-                    <IonItem>
+                    <div className="container-feedback-input">
+                    <IonItem className="input-feedback1">
                         <IonLabel position="floating"> Number of stars </IonLabel>
-                        <IonInput className="input_edit" type="number" value={stars}
+                        <IonInput type="number" value={stars}
                                   onIonChange={e => setStars(e.detail.value ? +e.detail.value : 0)}/>
                     </IonItem>
-                    <IonItem>
+                    </div>
+                    <div className="container-feedback-input">
+                    <IonItem className="input-feedback2">
                         <IonLabel position="floating"> Feedback plot</IonLabel>
                         <IonTextarea value={feedbackText} onIonChange={e => setFeedbackText(e.detail.value || '')} />
-                    </IonItem><br/>
+                    </IonItem>
+                    </div><br/>
                     <div className="add-feedback-button-container">
-                        <IonButton onClick={handleAddFeedback}>
+                        <IonButton color="success" onClick={handleAddFeedback}>
                             Add feedback
                         </IonButton>
                     </div>
@@ -360,7 +368,7 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                         message= {addFeedbackText}
                         duration={3000}
                     />
-                </IonCard>
+                </IonList>
                 <br/><br/>
                 {photos.length > 0 &&
                     <>
@@ -394,15 +402,11 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
                             lng={longitude}
                         />
                     </div>}
-                {/*<IonLoading isOpen={saving}/>*/}
-                {/*{savingError && (*/}
-                {/*    <div>{savingError.message || 'Failed to save meal'}</div>*/}
-                {/*)}*/}
                 <div className="buttons-edit">
-                        <IonButton className="button-edit" onClick={handleBack}>
+                        <IonButton color="success" className="button-edit" onClick={handleBack}>
                             Back
                         </IonButton>
-                        <IonButton className="button-edit" onClick={handleUpdate}>
+                        <IonButton color="success" className="button-edit" onClick={handleUpdate}>
                             Edit Place
                         </IonButton>
                 </div>

@@ -31,6 +31,17 @@ public class Place implements Comparable<Place>{
 
     private double points;
 
+    public Place(String name,double price,double latitude,double longitude,double points){
+        this.name = name;
+        if (price<0){
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+        this.price = price;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.points = points;
+    }
+
     @OneToMany(mappedBy = "placeFeedback", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Feedback> feedbacks;
 

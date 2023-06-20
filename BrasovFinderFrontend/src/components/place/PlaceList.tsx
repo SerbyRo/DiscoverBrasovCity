@@ -3,37 +3,28 @@ import {RouteComponentProps, useHistory} from "react-router";
 import {AuthContext} from "../auth";
 import {PlaceProps} from "./PlaceProps";
 import {
-    IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonIcon,
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonIcon,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     IonList,
-    IonPage, IonRouterLink,
-    IonSearchbar, IonTitle, IonToolbar,
+    IonSearchbar,
     useIonViewWillEnter
 } from "@ionic/react";
 import {alertController, createAnimation} from "@ionic/core";
-import Place from "./Place";
-import {
-    addVisit,
-    deletePlace,
-    deleteVisit,
-    findFirstImageById,
-    findPlaceById,
-    findVisitByUserIdAndPlaceId,
-    getPlaces
-} from "./PlaceApi";
+import {deletePlace, findFirstImageById, findVisitByUserIdAndPlaceId, getPlaces} from "./PlaceApi";
 import {Menu} from "../menu/Menu";
 import {MapModal} from "../modal/MapModal";
 import "./css/PlaceList.css";
-import {dateToString} from "../../utils/Utils";
-import {filter, pencil, trash} from "ionicons/icons";
-import {usePhotoGallery} from "../photo/usePhotoGallery";
-import place from "./Place";
-import {ImageProps} from "./ImageProps";
+import {pencil, trash} from "ionicons/icons";
 import {findUserByToken} from "../auth/authApi";
 import {UserProps} from "./UserProps";
 import {VisitProps} from "./VisitProps";
-
+import {Role} from "./Role";
 
 
 const indicesPresented = 5;
@@ -54,6 +45,7 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
     const [userId,setUserId] = useState<number>();
     const [visitPlace,setVisitPlace] = useState<boolean>(false);
     const [placeId,setPlaceId] = useState<number>(0);
+    const [roleUser, setRoleUser] = useState<boolean>(false);
     useEffect(()=>{
         const fetchPlaces = async () =>{
             const placesData = await getPlaces(token);
@@ -135,7 +127,14 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
             setUser(user1);
             setUserId(user1.id);
             console.log("Id-ul userului preluat este ",user1?.id);
+            console.log("Rolul din enum este "+ Role.ADMIN);
 
+            if (Role[user1.role as unknown as keyof typeof Role] === Role.ADMIN)
+            {
+                setRoleUser(true);
+                console.log("Rolul userului actualizat este " + roleUser);
+            }
+            console.log("Rolul userului este" + user1.role);
             const visit = await findVisitByUserIdAndPlaceId(token,placeId??0,user1.id??0);
             console.log("Vizita arata cam asa "+typeof visit);
             if (visit === ""){
@@ -206,7 +205,7 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
         return (
             <>
                 {/*<IonSearchbar value={searchText} onIonChange={e => handleTextChange(e)}/>*/}
-                <IonSearchbar className="searchbar-content" value={searchText} onIonChange={handleSearch}></IonSearchbar>
+                    <IonSearchbar className="searchbar-content" value={searchText} onIonChange={handleSearch}></IonSearchbar>
                 <IonList class="place-list1">
                     {filteredPlaces.map(place =>(
                         <IonCard className={`card-item1 ${visitPlace ? "visited-card" : "unvisited-card"}`} key={place.place_id}>
@@ -228,9 +227,9 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
                                 <IonButton color="warning" routerLink={`/place/${place.place_id}`}>
                                     <IonIcon icon={pencil} slot="icon-only"></IonIcon>
                                 </IonButton>
-                                <IonButton color="danger" onClick={()=> handleDelete(place.place_id)}>
+                                {roleUser &&(<IonButton color="danger" onClick={()=> handleDelete(place.place_id)}>
                                     <IonIcon icon={trash} slot="icon-only"></IonIcon>
-                                </IonButton>
+                                </IonButton>)}
                             </div>
                         </IonCard>
                     ))}

@@ -1,11 +1,41 @@
 .list-feedbacks{
-    --ion-color-primary: #8BC34A !important;
+    --ion-color-primary: #33cc33 !important;
     --ion-color-primary-contrast: black !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    box-shadow: 5px 5px lightgray;
+    max-width: 95%;
 }
+
+.card-subtitle-container {
+    font-size: 18px;
+}
+
+.card-title-container {
+    font-size: 20px;
+}
+
+.feedback-item-account {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 3px black solid;
+    --ion-color-primary: transparent !important;
+}
+
 
 .profile-label{
     font-size: 25px;
     font-style: italic;
+}
+
+.feedback-font-name {
+    color: black;
 }
 
 .my-account-container {
@@ -16,11 +46,37 @@
 
 .my-account-list {
     min-width: 90%;
+    background-color: transparent;
+}
+
+.my-account-list1 {
+    min-width: 90%;
     --ion-color-primary: purple !important;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
 }
 
 .my-account-delete-button {
     position: absolute;
     right: 10%;
     bottom: 8%;
+}
+
+.name-label-account{
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.email-label-account{
+    font-size: 15px;
+    font-weight: bold;
+    --ion-color-success: purple;
+    width: 95%;
+}
+
+.standings-label-account {
+    font-size: 15px;
+    font-style: italic;
 }

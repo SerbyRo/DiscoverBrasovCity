@@ -36,6 +36,7 @@ public class AuthenticationService {
         repository.save(user);
     }
 
+
     public Optional<User> findUserByUsername(String username) throws NotFoundException {
         Optional<User> user = repository.findByUsername(username);
         if (user.isPresent()){

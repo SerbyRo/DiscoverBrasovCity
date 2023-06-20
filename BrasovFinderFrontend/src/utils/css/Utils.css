@@ -1,0 +1,14 @@
+.gold-chip {
+    --ion-color-primary: gold;
+    --ion-color-primary-contrast: black;
+}
+
+.silver-chip {
+    --ion-color-primary: silver;
+    --ion-color-primary-contrast: black;
+}
+
+.bronze-chip {
+    --ion-color-primary: bronze;
+    --ion-color-primary-contrast: black;
+}

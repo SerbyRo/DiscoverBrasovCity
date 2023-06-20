@@ -41,6 +41,12 @@ public class AuthenticationController {
         return service.findUserByUsername(jwtService.extractUsername(token));
     }
 
+    @GetMapping("/users/{username}")
+    @CrossOrigin
+    public Optional<User> findUserByUsername(@PathVariable("username") String username) throws NotFoundException{
+        return service.findUserByUsername(username);
+    }
+
     @PostMapping("/authenticate")
     @CrossOrigin
     public ResponseEntity<AuthenticationResponse> authenticate(

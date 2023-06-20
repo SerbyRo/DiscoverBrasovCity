@@ -17,7 +17,7 @@ import {Menu} from "../menu/Menu";
 import {UserProps} from "../place/UserProps";
 import {findTop5UsersByPersonal_scoreDesc, findUserRankByPersonal_score} from "../place/PlaceApi";
 import {findUserByToken} from "../auth/authApi";
-import {getRankString} from "../../utils/Utils";
+import {getChipClass,getRankString} from "../../utils/Utils";
 import './css/Standings.css'
 
 const Standings : React.FC<RouteComponentProps> = () => {
@@ -26,6 +26,7 @@ const Standings : React.FC<RouteComponentProps> = () => {
     const [loggedUserRank,setLoggedUserRank] = useState<UserProps>();
     const [first5UsersbyRank,setFirst5UsersbyRank] = useState<UserProps[]>([]);
     const [currentUser,setCurrentUser] = useState<UserProps>();
+    const [chipClassColor,setChipClassColor] = useState<string>();
 
     useEffect(()=>{
         const fetchTop5Users = async () => {
@@ -51,7 +52,7 @@ const Standings : React.FC<RouteComponentProps> = () => {
                     {loggedUserRank && (
                         <div>
                             <h2>Current user</h2>
-                            <IonChip className="chip-standings">
+                            <IonChip>
                                 <p>
                                     {loggedUserRank.username} : {loggedUserRank.personal_score} points {getRankString(loggedUserRank.position??0)} place
                                 </p>
@@ -60,11 +61,18 @@ const Standings : React.FC<RouteComponentProps> = () => {
                     )}
 
                     <h2>Ranking top 5 interested tourists </h2>
-                    {first5UsersbyRank.map((user) => (
-                        <IonChip className="chip-standings2" key={user.id}>
+                <div className="standings-div">
+                    {
+                        first5UsersbyRank.map((user,index) => (
+                        <IonChip color="primary" className={
+                            user.position == 1 ? "first-place" :
+                                user.position == 2 ? "second-place" :
+                                    user.position == 3 ? "third-place" : "chip-standings2"
+                        } key={user.id}>
                             <p>{user.username} : {user.personal_score} points {getRankString(user.position??0)} place</p>
                         </IonChip>
                     ))}
+                </div>
             </div>
         );
     }

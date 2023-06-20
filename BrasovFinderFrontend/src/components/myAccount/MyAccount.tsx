@@ -117,27 +117,26 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                 </IonAvatar>
 
                 <IonListHeader className="my-account-container">
-                    <IonLabel>
+                    <IonLabel className="name-label-account">
                         Welcome {user?.username}
                     </IonLabel>
                 </IonListHeader>
-
                 <IonChip className="ion-margin-start">
                     <IonAvatar>
                         <img src="/assets/avatar.svg"/>
                     </IonAvatar>
-                    <IonLabel>
+                    <IonLabel color="success" className="email-label-account">
                         {user?.email}
                     </IonLabel>
                 </IonChip>
 
                 <IonChip color="danger" className="ion-margin-start points-chip">
-                    <IonLabel>
+                    <IonLabel className="standings-label-account">
                         You acumulated {user?.personal_score} points so far
                     </IonLabel>
                 </IonChip>
                 <IonList className="my-account-list">
-                    <IonListHeader className="my-account-list">
+                    <IonListHeader color="primary" className="my-account-list1">
                         {user?.personal_score === 0 ? <IonLabel> You have not visited any place yet </IonLabel>
                             :<IonLabel> Places visited by you </IonLabel>}
                     </IonListHeader>
@@ -157,21 +156,21 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
 
                     ))}
                 </IonList>
-                <IonCard className="apps-card my-account-list">
+                <IonList className="apps-card my-account-list">
                     <IonCardHeader>
-                        <IonCardSubtitle>
+                        <IonCardSubtitle className="card-subtitle-container">
                             Your feedbacks
                         </IonCardSubtitle>
-                        <IonCardTitle>
+                        <IonCardTitle className="card-title-container">
                             Preview of the given feedbacks
                         </IonCardTitle>
                     </IonCardHeader>
                         <IonList className="my-account-list">
                             {feedbacks.map(feedback => (
-                                <IonItem className="my-account-list">
-                                    <IonLabel>
-                                        <h3>{feedback.place_name}</h3>
-                                        <IonTextarea>
+                                <IonItem color="primary" className="feedback-item-account">
+                                    <IonLabel className="feedback-label-account">
+                                        <h3 className="feedback-font-name">{feedback.place_name}</h3>
+                                        <IonTextarea className="feedback-font-name">
                                             {feedback.feedback_text}
                                         </IonTextarea>
                                     </IonLabel>
@@ -183,7 +182,7 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                             ))}
                         </IonList>
 
-                </IonCard>
+                </IonList>
             </div>
         );
     }

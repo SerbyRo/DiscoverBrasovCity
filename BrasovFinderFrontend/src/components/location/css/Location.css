@@ -9,4 +9,49 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-radius: 20px;
+    min-width: 80%;
+    background-color: white;
+}
+
+.destination-input-maps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    min-width: 80%;
+    background-color: white;
+}
+
+.container-add-input-place {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.input-add-place {
+    --ion-item-background: orange;
+    width: 60%;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.location-title {
+    font-size: 16px;
+    font-style: italic;
+}
+
+.add-place-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.add-place-button-icon {
+    --ion-color-success : #2eb82e;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

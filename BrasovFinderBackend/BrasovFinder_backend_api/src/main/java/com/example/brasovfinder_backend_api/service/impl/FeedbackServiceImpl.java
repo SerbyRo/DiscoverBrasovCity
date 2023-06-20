@@ -68,6 +68,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public Feedback findFeedbackByPlaceIdAndUserId(Long place_id, Integer user_id) {
         Optional<User> user = userRepository.findById(user_id);
         Optional<Place> place = placeRepository.findById(place_id);
+        System.out.println(place.isEmpty());
         return feedbackRepository.findFeedbackByPlaceFeedbackAndUserFeedback(place.get(),user.get());
     }
 
