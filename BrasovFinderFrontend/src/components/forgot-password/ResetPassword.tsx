@@ -1,5 +1,6 @@
 import {useHistory, useParams} from "react-router";
 import React, {useState} from "react";
+import {baseUrl} from "../../core";
 import axios from "axios";
 import {
     IonButton,
@@ -26,7 +27,7 @@ export const ResetPassword = () => {
         setIsSubmitting(true);
 
         try {
-            await axios.put('http://localhost:8080/api/reset/reset-password/'+ token, {newPassword:password});
+            await axios.put(`http://${baseUrl}/api/reset/reset-password/${token}`, {newPassword:password});
             setMessage('Password was reset with success');
             history.push("/login");
         }catch (error){

@@ -170,7 +170,7 @@ const MyAccount : React.FC<RouteComponentProps> = () => {
                                 <IonItem color="primary" className="feedback-item-account">
                                     <IonLabel className="feedback-label-account">
                                         <h3 className="feedback-font-name">{feedback.place_name}</h3>
-                                        <IonTextarea className="feedback-font-name">
+                                        <IonTextarea className="feedback-font-name" readonly>
                                             {feedback.feedback_text}
                                         </IonTextarea>
                                     </IonLabel>

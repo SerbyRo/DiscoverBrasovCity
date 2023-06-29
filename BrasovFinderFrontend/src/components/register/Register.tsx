@@ -1,4 +1,4 @@
-import {getLogger} from "../../core";
+import {baseUrl, getLogger} from "../../core";
 import React, { useState} from "react";
 import {RouteComponentProps} from "react-router";
 import {alertController } from '@ionic/core';
@@ -128,7 +128,7 @@ export const Register : React.FC<RouteComponentProps> = ({history}) =>{
                 }, {
                     text: 'OK',
                     handler: () => {
-                        fetch('api/places/auth/register', {
+                        fetch(`http://${baseUrl}/api/places/auth/register`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

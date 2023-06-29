@@ -6,7 +6,7 @@ export function useCamera() {
   const getPhoto = useCallback<() => Promise<Photo>>(() => Camera.getPhoto({
     resultType: CameraResultType.Base64,
     source: CameraSource.Camera,
-    quality: 100,
+    quality: 30,
   }), []);
   return {
     getPhoto,

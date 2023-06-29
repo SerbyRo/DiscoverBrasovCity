@@ -39,6 +39,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
           console.log("loginu ii undefined");
       }
     login?.(username, password);
+      console.log()
   };
   log('render');
   if (isAuthenticated) {
@@ -79,7 +80,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
                 isOpen
                 header="Warning"
                 subHeader="Invalid credentials"
-                message="Please try again"
+                message={`Please try again. Error: ${JSON.stringify(authenticationError)}`}
                 buttons={['OK']}
             ></IonAlert>
         )}

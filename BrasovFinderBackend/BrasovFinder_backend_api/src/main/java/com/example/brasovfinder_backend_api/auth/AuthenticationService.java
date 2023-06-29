@@ -76,8 +76,8 @@ public class AuthenticationService {
                 .build();
     }
 
-    public List<User> findTop5ByOrderByPersonal_scoreDesc(){
-        List<User> standingsUsers = repository.findTop5UsersByPersonal_scoreDesc();
+    public List<User> findTop10ByOrderByPersonal_scoreDesc(){
+        List<User> standingsUsers = repository.findTop10UsersByPersonal_scoreDesc();
         return standingsUsers;
     }
 

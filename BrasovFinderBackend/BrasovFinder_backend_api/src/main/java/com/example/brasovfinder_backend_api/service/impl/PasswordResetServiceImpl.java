@@ -56,7 +56,10 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         resetPasswordTokenRepository.save(resetPassword);
         System.out.println(resetPassword);
 
-        String resetUrl = "http://localhost:8100/reset-password/" + token;
+        String baseUrl = "10.152.0.196:8100";
+        //String baseUrl = "localhost:8100";
+
+        String resetUrl = "http://" + baseUrl + "/reset-password/" + token;
         System.out.println(resetUrl);
         String subject = " Password forgotten? No worries, reset your password here";
         System.out.println(subject);

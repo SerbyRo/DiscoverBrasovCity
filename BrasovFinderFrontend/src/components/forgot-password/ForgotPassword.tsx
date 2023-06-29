@@ -14,6 +14,7 @@ import {
 } from "@ionic/react";
 import './css/ForgotPassword.css'
 import {alertController} from "@ionic/core";
+import {baseUrl} from "../../core";
 
 export const ForgotPassword : React.FC<RouteComponentProps> = () =>{
     const history = useHistory();
@@ -41,7 +42,7 @@ export const ForgotPassword : React.FC<RouteComponentProps> = () =>{
                     text: 'OK',
                     handler: async () => {
                         try {
-                            await axios.post('http://localhost:8080/api/reset/reset-password', {email}, {
+                            await axios.post(`http://${baseUrl}/api/reset/reset-password`, {email}, {
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
@@ -52,7 +53,7 @@ export const ForgotPassword : React.FC<RouteComponentProps> = () =>{
                         } catch (error) {
 
                             setMessage('Email address not found');
-                            console.error('There was an error registering the user:', error);
+                            console.error('There was an error registering the user:', JSON.stringify(error));
                         }
                     }
                 }

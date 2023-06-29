@@ -52,6 +52,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ){
+        System.out.println("Logging in...");
         return ResponseEntity.ok(service.authenticate(request));
     }
 
@@ -66,7 +67,7 @@ public class AuthenticationController {
     @GetMapping("/standings")
     @CrossOrigin
     public List<UserStandingDto> findTop5ByOrderByPersonal_scoreDesc(){
-        List<User> users = service.findTop5ByOrderByPersonal_scoreDesc();
+        List<User> users = service.findTop10ByOrderByPersonal_scoreDesc();
         int currentPosition = 0, index = 1;
         double lastUserScore = Double.MAX_VALUE;
         List<UserStandingDto> standingDtos = new ArrayList<>();

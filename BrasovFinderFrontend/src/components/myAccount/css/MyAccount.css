@@ -7,7 +7,7 @@
     margin-bottom: 10px;
     border-radius: 25px;
     box-shadow: 5px 5px lightgray;
-    max-width: 95%;
+    min-width: 95%;
 }
 
 .card-subtitle-container {

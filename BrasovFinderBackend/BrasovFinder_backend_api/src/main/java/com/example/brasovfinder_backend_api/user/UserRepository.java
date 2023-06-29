@@ -15,8 +15,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     Optional<User> findById(Integer id);
 
-    @Query("SELECT u FROM User u ORDER BY u.personal_score DESC LIMIT 5")
-    List<User> findTop5UsersByPersonal_scoreDesc();
+    @Query("SELECT u FROM User u ORDER BY u.personal_score DESC LIMIT 10")
+    List<User> findTop10UsersByPersonal_scoreDesc();
 
     @Query("SELECT (COUNT(u)+1) FROM User u WHERE u.personal_score>(SELECT u2.personal_score from User u2 WHERE u2.id = :userId)")
     Integer findUserRankByPersonal_score(@Param("userId") Integer userId);

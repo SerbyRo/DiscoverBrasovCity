@@ -323,11 +323,13 @@ export const Location: React.FC<RouteComponentProps> = () => {
                         />
                     </Autocomplete>
                 </div>
+                <div className="position-relative">
                     <GoogleMap onLoad={() => setIsLoaded(true)} mapContainerStyle={containerStyle} center={center} zoom={8}>
                         {directionsOptions?.map(({ directions, options }) => (
                             <DirectionsRenderer directions={directions} options={options} />
                         ))}
                     </GoogleMap>
+                </div>
                 <div className="container-add-input-place">
                     <IonItem className="input-add-place">
                         <IonLabel position="floating">The price per ticket is </IonLabel>

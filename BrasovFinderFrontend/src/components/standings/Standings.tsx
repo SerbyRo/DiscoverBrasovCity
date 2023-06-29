@@ -60,7 +60,7 @@ const Standings : React.FC<RouteComponentProps> = () => {
                         </div>
                     )}
 
-                    <h2>Ranking top 5 interested tourists </h2>
+                    <h2>Ranking top 10 interested tourists </h2>
                 <div className="standings-div">
                     {
                         first5UsersbyRank.map((user,index) => (
