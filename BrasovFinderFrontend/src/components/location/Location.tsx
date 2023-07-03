@@ -201,7 +201,7 @@ export const Location: React.FC<RouteComponentProps> = () => {
                         }
                     });
 
-                } catch (error) {
+                } catch (error: any) {
                     if (error.message.includes('NOT_FOUND')) {
                         console.log('Adresa sursă sau adresa destinație nu au fost găsite.');
                     } else {

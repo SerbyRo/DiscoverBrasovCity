@@ -234,13 +234,13 @@ const EditPlace: React.FC<EditPlaceProps> = ({history,match}) =>{
             const visit = await findVisitByUserIdAndPlaceId(token,routeIdNumber??0,user1.id??0);
             fetchFeedbacksByPlaceId(routeIdNumber);
             console.log("Vizita arata cam asa "+typeof visit);
-            if (visit === ""){
-                setIsVisited(false);
-            }
-            else
-            {
-                setIsVisited(true);
-            }
+            // if (visit === ""){
+            //     setIsVisited(false);
+            // }
+            // else
+            // {
+            //     setIsVisited(true);
+            // }
             console.log(user1);
         }
         fetchUsernameByUser();

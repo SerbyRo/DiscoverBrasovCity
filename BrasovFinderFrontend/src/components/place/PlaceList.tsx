@@ -137,13 +137,13 @@ const PlaceList: React.FC<RouteComponentProps> = (match) =>{
             console.log("Rolul userului este" + user1.role);
             const visit = await findVisitByUserIdAndPlaceId(token,placeId??0,user1.id??0);
             console.log("Vizita arata cam asa "+typeof visit);
-            if (visit === ""){
-                setVisitPlace(true);
-            }
-            else
-            {
-                setVisitPlace(false);
-            }
+            // if (visit === ""){
+            //     setVisitPlace(true);
+            // }
+            // else
+            // {
+            //     setVisitPlace(false);
+            // }
         }
         fetchUsernameByUser();
     },[]);

@@ -13,7 +13,7 @@ type LogoutFn = () => void;
 const Storage = Preferences;
 
 export interface AuthState {
-  authenticationError: Error | null;
+  authenticationError: Error | unknown | null;
   isAuthenticated: boolean;
   isAuthenticating: boolean;
   login?: LoginFn;

@@ -18,6 +18,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import AppUrlListener from "./components/AppUrlListener";
 
 /* Theme variables */
 import './theme/variables.css';
@@ -35,11 +36,13 @@ import Location from "./components/location/Location";
 import Help from "./components/help/Help";
 import Toast from "./components/toast/Toast";
 import Standings from "./components/standings/Standings";
+// import AppUrlListener from "./components/AppUrlListener";
 
 
 const App: React.FC = () => (
     <IonApp>
       <IonReactRouter>
+          <AppUrlListener/>
         <IonRouterOutlet>
           <AuthProvider>
             <Route path="/login" component={Login} exact={true}/>

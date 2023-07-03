@@ -7,7 +7,7 @@ import { getLogger } from '../../core';
 const log = getLogger('Login');
 
 export interface PrivateRouteProps {
-  component: PropTypes.ReactNodeLike;
+  component: React.ReactNode;
   path: string;
   exact?: boolean;
 }

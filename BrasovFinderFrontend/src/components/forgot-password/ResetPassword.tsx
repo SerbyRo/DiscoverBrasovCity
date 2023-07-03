@@ -1,4 +1,5 @@
-import {useHistory, useParams} from "react-router";
+import {useHistory} from "react-router";
+import {useParams} from "react-router";
 import React, {useState} from "react";
 import {baseUrl} from "../../core";
 import axios from "axios";
@@ -16,7 +17,7 @@ import {
 import './css/ForgotPassword.css'
 export const ResetPassword = () => {
     const history = useHistory();
-    const {token} = useParams();
+    const {token} = useParams<{token: string}>();
     const [password,setPassword] = useState<string>('');
     const [confirmPassword,setConfirmPassword] = useState<string>('');
     const [isSubmitting,setIsSubmitting] = useState<boolean>(false);
